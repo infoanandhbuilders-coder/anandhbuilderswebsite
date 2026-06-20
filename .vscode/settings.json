@@ -1,0 +1,14 @@
+{
+    "liveServer.settings.port": 5506,
+    "remote.autoForwardPorts": true,
+    "remote.portsAttributes": {
+        "5500": {
+            "onAutoForward": "ignore"
+        },
+        "5505": {
+            "label": "Anand Builders Dev Server",
+            "onAutoForward": "silent",
+            "visibility": "public"
+        }
+    }
+}

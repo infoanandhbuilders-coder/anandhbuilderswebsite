@@ -1,0 +1,1601 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Anand Builders | Turning Dreams into reality </title>
+    <!-- Tailwind CSS with Forms & Container Queries -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Premium Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Montserrat:wght@200;300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <!-- Google Material Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+    <!-- Tailwind Custom Configuration -->
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary-container": "#001b3d", // Deep Royal Navy
+                        "secondary-fixed-dim": "#e9c349", // Gold
+                        "secondary-fixed": "#ffe088", // Soft Gold
+                        "on-primary-fixed-variant": "#31476b",
+                        "surface": "#020710", // Ultra dark backdrop for contrast
+                        "surface-card": "rgba(2, 7, 16, 0.6)",
+                        "on-surface": "#fbf9f8",
+                        "on-surface-variant": "#c4c6cf",
+                        "outline-variant": "rgba(233, 195, 73, 0.2)"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "3xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        "headline": ["Playfair Display", "serif"],
+                        "body": ["Montserrat", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        .font-headline {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .font-body {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .material-symbols-filled {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .glass-panel {
+            background: rgba(2, 7, 16, 0.25);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .glass-panel-gold {
+            background: rgba(0, 27, 61, 0.2);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(233, 195, 73, 0.10);
+        }
+
+        .gold-glow:hover {
+            box-shadow: 0 0 30px rgba(233, 195, 73, 0.25);
+            border-color: rgba(233, 195, 73, 0.4);
+        }
+
+        .nav-underline::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #e9c349;
+            transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .nav-underline:hover::after {
+            width: 100%;
+        }
+
+        /* Custom Draggable Scroll Track styles */
+        .slider-track::-webkit-scrollbar {
+            display: none;
+        }
+
+        .slider-track {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .slider-track.dragging {
+            cursor: grabbing;
+        }
+
+        /* Page Load Animation Screen */
+        #loader-screen {
+            transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .preload-skipped #loader-screen {
+            display: none !important;
+        }
+
+        /* Custom scroll animations */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1.2s cubic-bezier(0.215, 0.610, 0.355, 1.000), transform 1.2s cubic-bezier(0.215, 0.610, 0.355, 1.000);
+        }
+
+        .scroll-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Sidebar social icons transition */
+        .social-fixed-btn {
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .social-fixed-btn:hover {
+            transform: translateX(-6px) scale(1.1);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #020710;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+            border: 2px solid #020710;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #e9c349;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-surface text-on-surface font-body overflow-x-hidden selection:bg-secondary-fixed-dim selection:text-primary-container">
+
+    <script>
+            (function () {
+                var loaded = false;
+                try {
+                    if (window.name.indexOf('site-loaded') !== -1 || sessionStorage.getItem('site-loaded') === 'true') {
+                        loaded = true;
+                    }
+                } catch (e) { }
+                if (loaded) {
+                    document.documentElement.classList.add('preload-skipped');
+                }
+            })();
+    </script>
+
+    <!-- Loading Preloader & Video Renderer -->
+    <div id="loader-screen" class="fixed inset-0 z-[150] bg-surface flex flex-col items-center justify-center">
+        <!-- Background Video during load -->
+        <video class="absolute inset-0 w-full h-full object-cover opacity-20 pointer-events-none" autoplay loop muted
+            playsinline>
+            <source src="img/loading_video.mp4" type="video/mp4">
+        </video>
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent to-surface pointer-events-none"></div>
+
+        <div class="relative z-10 flex flex-col items-center text-center px-6">
+            <img class="h-28 w-auto mb-8  border border-secondary-fixed-dim/20 p-2 rounded-lg bg-primary-container/40"
+                src="img/logo.jpeg" alt="Anandh Builders Logo" />
+            <h2 class="font-headline text-2xl md:text-3xl text-secondary-fixed-dim tracking-widest uppercase mb-2">
+                Welcome To Anandh
+                Builders</h2>
+            <p class="text-on-surface-variant font-light tracking-[0.2em] text-sm uppercase mb-8">
+                Turning Dreams into reality </p>
+
+            <!-- Progress Bar -->
+            <div class="w-64 h-1 bg-white/10 rounded-full overflow-hidden mb-3 relative">
+                <div id="loader-progress"
+                    class="absolute left-0 top-0 h-full w-0 bg-gradient-to-r from-secondary-fixed-dim to-secondary-fixed transition-all duration-300 rounded-full">
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+    <!-- Scroll-driven Background Animation Canvas -->
+    <canvas id="bg-canvas"
+        class="fixed top-0 left-0 w-full h-full object-cover -z-10 pointer-events-none opacity-0"></canvas>
+
+    <!-- Static Fallback / Hero Background Image Carousel (behind canvas) -->
+    <div id="bg-fallback" class="fixed top-0 left-0 w-full h-full -z-20 opacity-40 transition-opacity duration-300">
+        <div class="hero-bg-slide absolute inset-0 bg-cover bg-center transition-opacity duration-[1.5s] opacity-100"
+            style="background-image: url('img/ChatGPT Image Jun 5, 2025, 11_16_35 AM (1).jpg');"></div>
+        <div class="hero-bg-slide absolute inset-0 bg-cover bg-center transition-opacity duration-[1.5s] opacity-0"
+            style="background-image: url('img/BG.jpeg');"></div>
+        <div class="hero-bg-slide absolute inset-0 bg-cover bg-center transition-opacity duration-[1.5s] opacity-0"
+            style="background-image: url('img/hero 1.jpeg');"></div>
+    </div>
+    <div
+        class="fixed top-0 left-0 w-full h-full -z-15 pointer-events-none bg-gradient-to-b from-transparent via-surface/40 to-surface/90">
+    </div>
+
+    <!-- Fixed Floating Side Social Menu -->
+    <div class="fixed right-6 top-1/2 -translate-y-1/2 z-40 flex flex-col gap-4">
+        <!-- WhatsApp -->
+        <a href="https://wa.me/917845840773" target="_blank" rel="noopener noreferrer"
+            class="social-fixed-btn w-12 h-12 rounded-full glass-panel flex items-center justify-center text-on-surface hover:text-[#25D366] border border-white/10 hover:border-[#25D366]/40 shadow-lg group relative"
+            aria-label="WhatsApp">
+            <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                <path
+                    d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.457L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.42 9.863-9.864.001-2.637-1.023-5.115-2.883-6.978C16.59 1.899 14.116 1.83 12.008 1.83c-5.44 0-9.865 4.42-9.867 9.865-.001 1.767.461 3.493 1.338 5.024L2.5 21.5l5.147-1.346zM17.5 14.39c-.3-.15-1.782-.88-2.062-.98-.28-.1-.48-.15-.68.15-.2.3-.77.98-.95 1.18-.18.2-.35.23-.65.08-1.02-.51-1.98-1.09-2.76-1.77-.62-.54-1.03-1.21-1.15-1.42-.12-.21-.01-.32.09-.42.09-.09.2-.23.3-.35.1-.12.13-.2.2-.35.07-.15.03-.28-.02-.38-.05-.1-.48-1.15-.66-1.59-.17-.41-.35-.35-.48-.36h-.41c-.15 0-.38.06-.58.28-.2.22-.76.75-.76 1.83 0 1.08.79 2.13.9 2.28.11.15 1.56 2.38 3.79 3.34.53.23.95.37 1.27.47.54.17 1.03.15 1.41.09.43-.06 1.78-.73 2.03-1.43.25-.7.25-1.3.17-1.43-.07-.12-.27-.2-.57-.35z" />
+            </svg>
+            <span
+                class="absolute right-14 scale-0 origin-right transition-all duration-300 group-hover:scale-100 glass-panel text-secondary-fixed text-[10px] tracking-widest uppercase px-3 py-1 border border-white/10 rounded-md whitespace-nowrap">WhatsApp
+            </span>
+        </a>
+        <!-- Instagram -->
+        <a href="https://www.instagram.com/anandh_builders?utm_source=qr&igsh=MWk2NDNsZXEweWwyMQ==" target="_blank"
+            rel="noopener noreferrer"
+            class="social-fixed-btn w-12 h-12 rounded-full glass-panel flex items-center justify-center text-on-surface hover:text-[#E1306C] border border-white/10 hover:border-[#E1306C]/40 shadow-lg group relative"
+            aria-label="Instagram portal">
+            <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                <path
+                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204 013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.791-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.209-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+            </svg>
+            <span
+                class="absolute right-14 scale-0 origin-right transition-all duration-300 group-hover:scale-100 glass-panel text-secondary-fixed text-[10px] tracking-widest uppercase px-3 py-1 border border-white/10 rounded-md whitespace-nowrap">Instagram
+                Page</span>
+        </a>
+        <!-- YouTube -->
+        <a href="https://youtube.com/@anandhbuilderstvm?si=--2A0CXdZaVv0h4G" target="_blank" rel="noopener noreferrer"
+            class="social-fixed-btn w-12 h-12 rounded-full glass-panel flex items-center justify-center text-on-surface hover:text-[#FF0000] border border-white/10 hover:border-[#FF0000]/40 shadow-lg group relative"
+            aria-label="YouTube channel">
+            <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                <path
+                    d="M23.498 6.163c-.272-1.017-1.07-1.815-2.087-2.087C19.578 3.5 12 3.5 12 3.5s-7.578 0-9.412.576C1.57 4.348.772 5.146.502 6.163.003 7.997 0 12 0 12s.003 4.003.502 5.837c.27 1.017 1.07 1.815 2.087 2.087C4.42 20.5 12 20.5 12 20.5s7.578 0 9.412-.576c1.017-.272 1.815-1.07 2.087-2.087.5-1.834.502-5.837.502-5.837s-.002-4.003-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+            </svg>
+            <span
+                class="absolute right-14 scale-0 origin-right transition-all duration-300 group-hover:scale-100 glass-panel text-secondary-fixed text-[10px] tracking-widest uppercase px-3 py-1 border border-white/10 rounded-md whitespace-nowrap">YouTube
+                Channel</span>
+        </a>
+    </div>
+
+    <!-- Navigation Header -->
+    <nav
+        class="fixed top-0 w-full z-[100] bg-white backdrop-blur-md border-b border-slate-100 transition-all duration-300 h-24 flex items-center shadow-[0_4px_25px_rgba(0,0,0,0.03)]">
+        <div class="flex justify-between items-center w-full px-6 md:px-16 max-w-[1440px] mx-auto">
+            <!-- Brand Logo & Name -->
+            <a href="#" class="flex items-center gap-4 group">
+                <img class="logo-img h-20 w-auto object-contain transition-all duration-300" src="img/logo.jpeg"
+                    alt="Anand Builders Logo" />
+                <div class="flex flex-col">
+                    <span
+                        class="font-headline text-lg md:text-xl text-slate-900 tracking-wider font-bold group-hover:text-amber-600 transition-colors">Anandh
+                        Builders</span>
+                    <span class="text-[9px] font-body tracking-[0.3em] text-orange-500 uppercase font-semibold">Turning
+                        Dreams into reality
+
+                    </span>
+                </div>
+            </a>
+
+            <!-- Nav Items -->
+            <div class="hidden md:flex items-center gap-12">
+                <a class="font-body text-xs text-slate-600 hover:text-slate-900 transition-colors duration-300 relative nav-underline uppercase tracking-widest"
+                    href="#heritage">Heritage</a>
+                <a class="font-body text-xs text-slate-600 hover:text-slate-900 transition-colors duration-300 relative nav-underline uppercase tracking-widest"
+                    href="#portfolio">Constructions</a>
+                <a class="font-body text-xs text-slate-600 hover:text-slate-900 transition-colors duration-300 relative nav-underline uppercase tracking-widest"
+                    href="#leadership">Leadership</a>
+                <a class="font-body text-xs text-slate-600 hover:text-slate-900 transition-colors duration-300 relative nav-underline uppercase tracking-widest"
+                    href="gallery.html">Gallery</a>
+                <a href="#contact"
+                    class="px-8 py-3.5 bg-primary-container text-secondary-fixed hover:bg-primary-container/90 rounded-none font-body text-xs uppercase tracking-widest transition-all duration-300 shadow-md">
+                    Inquire Now
+                </a>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="md:hidden text-slate-900 flex items-center" id="mobile-nav-toggle"
+                aria-label="Toggle mobile menu">
+                <span class="material-symbols-outlined text-3xl">menu</span>
+            </button>
+        </div>
+
+        <!-- Mobile Dropdown Nav -->
+        <div id="mobile-nav-menu"
+            class="absolute top-24 left-0 w-full bg-white border-b border-slate-100 py-8 px-6 flex flex-col gap-6 hidden md:hidden shadow-lg">
+            <a class="font-body text-xs text-slate-700 hover:text-slate-950 uppercase tracking-widest"
+                href="#heritage">Heritage</a>
+            <a class="font-body text-xs text-slate-700 hover:text-slate-950 uppercase tracking-widest"
+                href="#portfolio">Constructions</a>
+            <a class="font-body text-xs text-slate-700 hover:text-slate-950 uppercase tracking-widest"
+                href="#leadership">Leadership</a>
+            <a class="font-body text-xs text-slate-700 hover:text-slate-950 uppercase tracking-widest"
+                href="gallery.html">Gallery</a>
+            <a href="#contact"
+                class="w-full text-center py-4 bg-primary-container text-secondary-fixed font-semibold uppercase tracking-widest text-xs">
+                Inquire Now
+            </a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative min-h-screen w-full flex flex-col justify-end pb-16 pt-32 overflow-hidden px-6 md:px-16">
+        <div
+            class="max-w-[1440px] mx-auto w-full flex flex-col items-center md:items-start text-center md:text-left z-20">
+            <div class="w-16 h-px bg-secondary-fixed-dim mb-8 scroll-reveal" style="transition-delay: 100ms"></div>
+
+            <h1 class="font-headline text-4xl md:text-7xl lg:text-8xl text-on-surface mb-6 scroll-reveal tracking-wide leading-tight max-w-4xl"
+                style="transition-delay: 300ms">
+                Crafting Yours <span class="text-orange-500 italic">Dream</span>
+            </h1>
+
+            <p class="font-body text-sm md:text-md text-on-surface-variant max-w-xl mb-12 leading-relaxed tracking-wider scroll-reveal"
+                style="transition-delay: 500ms">
+                Sovereign architectural engineering and royal aesthetics created for the discerning few. Building
+                legacies since 1999.
+            </p>
+
+            <div class="scroll-reveal mb-16" style="transition-delay: 700ms">
+                <a class="px-10 py-5 bg-orange-500 from-secondary-fixed-dim to-secondary-fixed text-white-500 font-semibold text-xs uppercase tracking-[0.2em] inline-flex items-center gap-4 hover:shadow-[0_0_30px_rgba(233,195,73,0.3)] transition-all duration-300"
+                    href="#heritage">
+                    Explore Our Legacy
+                    <span class="material-symbols-outlined text-[16px] animate-bounce">arrow_downward</span>
+                </a>
+            </div>
+
+            <!-- Glassmorphic Stats Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-[1200px] mt-12 scroll-reveal"
+                style="transition-delay: 900ms">
+                <!-- Stat Card 1 -->
+                <div
+                    class="glass-panel-gold rounded-2xl p-8 flex items-center gap-6 text-left gold-glow transition-all duration-300">
+                    <div
+                        class="w-14 h-14 rounded-xl bg-secondary-fixed-dim/10 border border-secondary-fixed-dim/20 flex items-center justify-center text-secondary-fixed-dim">
+                        <span class="material-symbols-outlined text-3xl">domain</span>
+                    </div>
+                    <div>
+                        <div class="flex items-baseline">
+                            <span class="text-3xl md:text-4xl font-headline font-bold text-on-surface stat-counter"
+                                data-target="100">0</span>
+                            <span class="text-xl font-headline font-bold text-secondary-fixed-dim">+</span>
+                        </div>
+                        <p class="text-xs font-body tracking-wider text-on-surface-variant uppercase mt-1">Completed
+                            Constructions</p>
+                    </div>
+                </div>
+                <!-- Stat Card 2 -->
+                <div
+                    class="glass-panel-gold rounded-2xl p-8 flex items-center gap-6 text-left gold-glow transition-all duration-300">
+                    <div
+                        class="w-14 h-14 rounded-xl bg-secondary-fixed-dim/10 border border-secondary-fixed-dim/20 flex items-center justify-center text-secondary-fixed-dim">
+                        <span class="material-symbols-outlined text-3xl">history_edu</span>
+                    </div>
+                    <div>
+                        <div class="flex items-baseline">
+                            <span class="text-3xl md:text-4xl font-headline font-bold text-on-surface stat-counter"
+                                data-target="15">0</span>
+                            <span class="text-xl font-headline font-bold text-secondary-fixed-dim">+</span>
+                        </div>
+                        <p class="text-xs font-body tracking-wider text-on-surface-variant uppercase mt-1">Years of
+                            Royal Experience</p>
+                    </div>
+                </div>
+                <!-- Stat Card 3 -->
+                <div
+                    class="glass-panel-gold rounded-2xl p-8 flex items-center gap-6 text-left gold-glow transition-all duration-300">
+                    <div
+                        class="w-14 h-14 rounded-xl bg-secondary-fixed-dim/10 border border-secondary-fixed-dim/20 flex items-center justify-center text-secondary-fixed-dim">
+                        <span class="material-symbols-outlined text-3xl">verified</span>
+                    </div>
+                    <div>
+                        <div class="flex items-baseline">
+                            <span class="text-3xl md:text-4xl font-headline font-bold text-on-surface stat-counter"
+                                data-target="100">0</span>
+                            <span class="text-xl font-headline font-bold text-secondary-fixed-dim">%</span>
+                        </div>
+                        <p class="text-xs font-body tracking-wider text-on-surface-variant uppercase mt-1">Client
+                            Satisfaction Rate</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Heritage / About Section -->
+    <section class="py-32 bg-surface/30 backdrop-blur-[2px] overflow-hidden relative" id="heritage">
+        <div class="max-w-[1440px] mx-auto px-6 md:px-16">
+            <div class="flex flex-col lg:flex-row gap-20 items-center">
+                <!-- Text Area -->
+                <div class="w-full lg:w-1/2 scroll-reveal text-left">
+                    <span
+                        class="font-body text-xs text-secondary-fixed-dim uppercase tracking-[0.3em] block mb-4">Established
+                        Royal Standard</span>
+                    <h2 class="font-headline text-3xl md:text-5xl text-on-surface mb-8 leading-tight">A Legacy Carved in
+                        Stone and Gold</h2>
+                    <div class="w-16 h-1 bg-secondary-fixed-dim mb-8"></div>
+                    <p class="font-body text-md text-on-surface-variant mb-6 leading-relaxed">
+                        For more than a quarter-century, Anandh Builders has stood at the intersection of architectural
+                        grandeur and engineering precision. We don't build houses; we anchor permanent monuments to
+                        human accomplishment.
+                    </p>
+                    <p class="font-body text-md text-on-surface-variant mb-12 leading-relaxed">
+                        Our projects fuse historical elegance with contemporary structural aesthetics, satisfying the
+                        highest demands for craftsmanship. Every column, facade, and archway speaks of sovereign
+                        permanence.
+                    </p>
+                    <div class="grid grid-cols-2 gap-8 border-l border-secondary-fixed-dim/30 pl-8">
+                        <div>
+                            <span class="block font-headline text-3xl md:text-4xl text-on-surface">15+</span>
+                            <span class="font-body text-[10px] text-on-surface-variant uppercase tracking-wider">Years
+                                of Majesty</span>
+                        </div>
+                        <div>
+                            <span class="block font-headline text-3xl md:text-4xl text-on-surface">100+</span>
+                            <span class="font-body text-[10px] text-on-surface-variant uppercase tracking-wider">Bespoke
+                                Landmarks</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Graphic Image Area -->
+                <div class="w-full lg:w-1/2 relative scroll-reveal">
+                    <div class="aspect-[4/5] rounded-3xl overflow-hidden glass-panel p-3 relative shadow-2xl group">
+                        <img class="w-full h-full object-cover rounded-2xl filter brightness-90 contrast-105 group-hover:scale-105 transition-all duration-[1.5s]"
+                            src="./img/heritage.jpeg"
+                            alt="A grand classical architectural facade representing Anandh Builders heritage" />
+                        <div class="absolute inset-0 bg-gradient-to-t from-surface to-transparent opacity-60"></div>
+                    </div>
+                    <div
+                        class="absolute -bottom-6 -left-6 bg-gradient-to-br from-primary-container to-surface border border-secondary-fixed-dim/20 p-8 rounded-2xl hidden md:block glass-panel shadow-2xl">
+                        <span
+                            class="material-symbols-outlined text-secondary-fixed-dim text-5xl mb-4">architecture</span>
+                        <p
+                            class="text-on-surface font-body text-xs uppercase tracking-widest max-w-[120px] leading-relaxed">
+                            Craft Your Dream House with Anandh Builders</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Draggable / Swipeable Completed Projects Gallery -->
+    <section class="py-32 bg-surface/20 backdrop-blur-[2px] relative overflow-hidden" id="portfolio">
+        <!-- Background accents -->
+        <div
+            class="absolute w-96 h-96 rounded-full bg-secondary-fixed-dim/5 blur-3xl -top-10 -left-10 pointer-events-none">
+        </div>
+        <div
+            class="absolute w-96 h-96 rounded-full bg-primary-container/20 blur-3xl -bottom-10 -right-10 pointer-events-none">
+        </div>
+
+        <div class="max-w-[1440px] mx-auto px-6 md:px-16 relative z-10">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 scroll-reveal">
+                <div class="text-left max-w-xl">
+                    <span class="font-body text-xs text-secondary-fixed-dim uppercase tracking-[0.4em] block mb-4">The
+                        Portfolio</span>
+                    <h2 class="font-headline text-3xl md:text-5xl text-on-surface mb-4">Masterpieces of Architecture
+                    </h2>
+                    <p class="font-body text-xs text-on-surface-variant uppercase tracking-widest">Completed
+                        Constructions Gallery — Swipe/Drag to Explore</p>
+                </div>
+                <!-- Navigation Buttons -->
+                <div class="flex items-center gap-4 mt-8 md:mt-0">
+                    <button id="slider-prev"
+                        class="w-12 h-12 rounded-full border border-white/10 hover:border-secondary-fixed-dim text-on-surface hover:text-secondary-fixed-dim flex items-center justify-center transition-all bg-primary-container/20 hover:scale-105"
+                        aria-label="Previous slide">
+                        <span class="material-symbols-outlined">chevron_left</span>
+                    </button>
+                    <button id="slider-next"
+                        class="w-12 h-12 rounded-full border border-white/10 hover:border-secondary-fixed-dim text-on-surface hover:text-secondary-fixed-dim flex items-center justify-center transition-all bg-primary-container/20 hover:scale-105"
+                        aria-label="Next slide">
+                        <span class="material-symbols-outlined">chevron_right</span>
+                    </button>
+                </div>
+            </div> <!-- Draggable Container -->
+            <div id="slider-track"
+                class="slider-track flex gap-8 overflow-x-auto select-none pb-12 cursor-grab active:cursor-grabbing -mx-6 md:-mx-16 px-[7.5vw] md:px-16 snap-x snap-mandatory md:snap-none">
+
+                <!-- Project Card 1 (Azure Pavilion) -->
+                <div
+                    class="min-w-[85vw] md:min-w-[450px] lg:min-w-[500px] snap-center md:snap-align-none glass-panel rounded-3xl p-0 overflow-hidden group border border-white/5 transition-all duration-500 hover:border-secondary-fixed-dim/20 shadow-xl">
+                    <div class="h-[450px] w-full overflow-hidden relative project-slideshow">
+                        <img class="w-full h-full object-cover select-none absolute inset-0 opacity-100 transition-opacity duration-1000"
+                            src="img\third customer.jpeg" alt="The Azure Pavilion View 1" />
+
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-surface/85 via-transparent to-transparent pointer-events-none z-10">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 2 (Gold Leaf Villa) -->
+                <div
+                    class="min-w-[85vw] md:min-w-[450px] lg:min-w-[500px] snap-center md:snap-align-none glass-panel rounded-3xl p-0 overflow-hidden group border border-white/5 transition-all duration-500 hover:border-secondary-fixed-dim/20 shadow-xl">
+                    <div class="h-[450px] w-full overflow-hidden relative project-slideshow">
+                        <img class="w-full h-full object-cover select-none absolute inset-0 opacity-100 transition-opacity duration-1000"
+                            src="./img/first customer.jpeg" alt="The Gold Leaf Villa View 1" />
+
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-surface/85 via-transparent to-transparent pointer-events-none z-10">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 3 (Sovereign Penthouse) -->
+                <div
+                    class="min-w-[85vw] md:min-w-[450px] lg:min-w-[500px] snap-center md:snap-align-none glass-panel rounded-3xl p-0 overflow-hidden group border border-white/5 transition-all duration-500 hover:border-secondary-fixed-dim/20 shadow-xl">
+                    <div class="h-[450px] w-full overflow-hidden relative project-slideshow">
+                        <img class="w-full h-full object-cover select-none absolute inset-0 opacity-100 transition-opacity duration-1000"
+                            src="./img/second customer.jpeg" alt="Sovereign Penthouse View 1" />
+
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-surface/85 via-transparent to-transparent pointer-events-none z-10">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 4 (Royal Meridian Office) -->
+                <div
+                    class="min-w-[85vw] md:min-w-[450px] lg:min-w-[500px] snap-center md:snap-align-none glass-panel rounded-3xl p-0 overflow-hidden group border border-white/5 transition-all duration-500 hover:border-secondary-fixed-dim/20 shadow-xl">
+                    <div class="h-[450px] w-full overflow-hidden relative project-slideshow">
+                        <img class="w-full h-full object-cover select-none absolute inset-0 opacity-100 transition-opacity duration-1000"
+                            src="./img/fourth customer.jpeg" alt="Royal Meridian Office View 1" />
+
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-surface/85 via-transparent to-transparent pointer-events-none z-10">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Project Card 5 (Vanguard Manor) -->
+                <div
+                    class="min-w-[85vw] md:min-w-[450px] lg:min-w-[500px] snap-center md:snap-align-none glass-panel rounded-3xl p-0 overflow-hidden group border border-white/5 transition-all duration-500 hover:border-secondary-fixed-dim/20 shadow-xl">
+                    <div class="h-[450px] w-full overflow-hidden relative project-slideshow">
+                        <img class="w-full h-full object-cover select-none absolute inset-0 opacity-100 transition-opacity duration-1000"
+                            src="./img/5th customet.jpeg" alt="Vanguard Manor View 1" />
+
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-surface/85 via-transparent to-transparent pointer-events-none z-10">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Slide Dots Indicators -->
+        <div id="slider-dots" class="flex justify-center items-center gap-3 mt-4">
+            <!-- Javascript will inject dots dynamically -->
+        </div>
+        </div>
+    </section>
+
+    <!-- Leadership Section -->
+    <section class="py-32 bg-primary-container/30 backdrop-blur-[2px] relative overflow-hidden" id="leadership">
+        <div class="absolute inset-0 opacity-10 bg-cover bg-center pointer-events-none"
+            style="background-image: url('img/PLAIN BG.jpg');"></div>
+        <div class="absolute inset-0 bg-gradient-to-r from-primary-container via-primary-container/90 to-surface"></div>
+
+        <div class="max-w-[1440px] mx-auto px-6 md:px-16 relative z-10 text-center">
+            <span class="font-body text-xs text-secondary-fixed-dim uppercase tracking-[0.3em] block mb-4">Our
+                Leadership</span>
+            <h2 class="font-headline text-3xl md:text-5xl text-on-surface mb-16">The Visionaries</h2>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-stretch max-w-6xl mx-auto text-left">
+                <!-- Leader 1: Founder -->
+                <div
+                    class="glass-panel border border-white/5 rounded-3xl p-6 flex flex-col md:flex-row gap-8 items-center md:items-stretch shadow-2xl hover:border-secondary-fixed-dim/20 transition-all duration-300 group">
+                    <div
+                        class="w-full md:w-2/5 aspect-[3/4] relative border border-secondary-fixed-dim/20 p-2 rounded-2xl flex-shrink-0 bg-primary-container/20">
+                        <div class="absolute inset-2 bg-cover bg-center"
+                            style="background-image: url('./img/ANAND.jpeg');"></div>
+                    </div>
+                    <div class="flex flex-col justify-between flex-grow">
+                        <div>
+                            <h3
+                                class="font-headline text-2xl text-on-surface mb-1 font-semibold group-hover:text-secondary-fixed-dim transition-colors">
+                                Mr. Anandh</h3>
+                            <p
+                                class="font-body text-[10px] text-secondary-fixed-dim uppercase tracking-wider font-semibold mb-4">
+                                Founder</p>
+                            <p class="font-body text-xs text-on-surface-variant leading-relaxed">
+                                Under his stewardship, Anandh Builders has evolved into a global benchmark of
+                                architectural majesty. He bridges traditional classical detailing with innovative
+                                sustainability, ensuring every landmark stands through generations.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Leader 2: Managing Director -->
+                <div
+                    class="glass-panel border border-white/5 rounded-3xl p-6 flex flex-col md:flex-row gap-8 items-center md:items-stretch shadow-2xl hover:border-secondary-fixed-dim/20 transition-all duration-300 group">
+                    <div
+                        class="w-full md:w-2/5 aspect-[3/4] relative border border-secondary-fixed-dim/20 p-2 rounded-2xl flex-shrink-0 bg-primary-container/20">
+                        <div class="absolute inset-2 bg-cover bg-center"
+                            style="background-image: url('./img/Roshan final .png');"></div>
+                    </div>
+                    <div class="flex flex-col justify-between flex-grow">
+                        <div>
+                            <h3
+                                class="font-headline text-2xl text-on-surface mb-1 font-semibold group-hover:text-secondary-fixed-dim transition-colors">
+                                Mr.Roshan</h3>
+                            <p
+                                class="font-body text-[10px] text-secondary-fixed-dim uppercase tracking-wider font-semibold mb-4">
+                                MANAGING DIRECTOR</p>
+                            <p class="font-body text-xs text-on-surface-variant leading-relaxed">
+                                Overseeing executive administration and project lifecycle management. Directing the
+                                business operations with sovereign execution to ensure that our projects achieve client
+                                timelines and quality standards with 100% satisfaction.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact & Liaison Form Section -->
+    <section class="py-32 bg-surface/20 backdrop-blur-[2px] relative" id="contact">
+        <div class="max-w-[1440px] mx-auto px-6 md:px-16">
+            <div class="flex flex-col lg:flex-row gap-20">
+                <!-- Contact Details -->
+                <div class="w-full lg:w-1/3 text-left scroll-reveal">
+                    <span
+                        class="font-body text-xs text-secondary-fixed-dim uppercase tracking-[0.4em] block mb-4">Direct
+                        Enquiry</span>
+                    <h2 class="font-headline text-3xl md:text-5xl text-on-surface mb-12">Inquire About Your Legacy</h2>
+
+                    <ul class="space-y-10">
+                        <li class="flex gap-6 items-start">
+                            <div
+                                class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-secondary-fixed-dim flex-shrink-0">
+                                <span class="material-symbols-outlined text-2xl">location_on</span>
+                            </div>
+                            <div>
+                                <h5
+                                    class="font-body text-xs font-semibold text-secondary-fixed-dim uppercase tracking-wider mb-2">
+                                    Office Address</h5>
+                                <p class="font-body text-sm text-on-surface-variant leading-relaxed">101 Heritage
+                                    Boulevard, Suite 500<br />Capital City, 110001</p>
+                            </div>
+                        </li>
+                        <li class="flex gap-6 items-start">
+                            <div
+                                class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-secondary-fixed-dim flex-shrink-0">
+                                <span class="material-symbols-outlined text-2xl">mail</span>
+                            </div>
+                            <div>
+                                <h5
+                                    class="font-body text-xs font-semibold text-secondary-fixed-dim uppercase tracking-wider mb-2">
+                                    Email ID</h5>
+                                <p class="font-body text-sm text-on-surface-variant">anandhbuilderstvm7@gmail.com</p>
+                            </div>
+                        </li>
+                        <li class="flex gap-6 items-start">
+                            <div
+                                class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-secondary-fixed-dim flex-shrink-0">
+                                <span class="material-symbols-outlined text-2xl">call</span>
+                            </div>
+                            <div>
+                                <h5
+                                    class="font-body text-xs font-semibold text-secondary-fixed-dim uppercase tracking-wider mb-2">
+                                    Direct Phone CAll</h5>
+                                <p class="font-body text-sm text-on-surface-variant">+91 78458 40773</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Inquiry Form -->
+                <div class="w-full lg:w-2/3 scroll-reveal">
+                    <form id="inquiry-form"
+                        class="glass-panel p-8 md:p-12 rounded-3xl border border-white/5 flex flex-col gap-10 text-left shadow-2xl relative overflow-hidden">
+                        <div
+                            class="absolute w-64 h-64 rounded-full bg-secondary-fixed-dim/5 blur-3xl -bottom-10 -right-10 pointer-events-none">
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                            <div class="relative">
+                                <label
+                                    class="font-body text-[10px] text-secondary-fixed-dim uppercase tracking-widest block mb-2 font-semibold">Your
+                                    Full Name</label>
+                                <input id="from_name" name="from_name"
+                                    class="w-full border-0 border-b border-white/10 py-3 px-0 focus:ring-0 focus:border-secondary-fixed-dim transition-all bg-transparent placeholder:text-white/20 text-on-surface font-body text-sm"
+                                    placeholder="" type="text" required />
+                            </div>
+                            <div class="relative">
+                                <label
+                                    class="font-body text-[10px] text-secondary-fixed-dim uppercase tracking-widest block mb-2 font-semibold">Email
+                                    Address</label>
+                                <input id="from_email" name="from_email"
+                                    class="w-full border-0 border-b border-white/10 py-3 px-0 focus:ring-0 focus:border-secondary-fixed-dim transition-all bg-transparent placeholder:text-white/20 text-on-surface font-body text-sm"
+                                    placeholder="" type="email" required />
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                            <div class="relative">
+                                <label
+                                    class="font-body text-[10px] text-secondary-fixed-dim uppercase tracking-widest block mb-2 font-semibold">Subject
+                                    of Interest</label>
+                                <input id="subject" name="subject"
+                                    class="w-full border-0 border-b border-white/10 py-3 px-0 focus:ring-0 focus:border-secondary-fixed-dim transition-all bg-transparent placeholder:text-white/20 text-on-surface font-body text-sm"
+                                    placeholder="e.g. Home, Office, Complex" type="text" required />
+                            </div>
+                            <div class="relative">
+                                <label
+                                    class="font-body text-[10px] text-secondary-fixed-dim uppercase tracking-widest block mb-2 font-semibold">Project
+                                    Location</label>
+                                <input id="location" name="location"
+                                    class="w-full border-0 border-b border-white/10 py-3 px-0 focus:ring-0 focus:border-secondary-fixed-dim transition-all bg-transparent placeholder:text-white/20 text-on-surface font-body text-sm"
+                                    placeholder="Tiruvannamalai,Chengam " type="text" />
+                            </div>
+                        </div>
+
+                        <div class="relative">
+                            <label
+                                class="font-body text-[10px] text-secondary-fixed-dim uppercase tracking-widest block mb-2 font-semibold">Further
+                                Specifications</label>
+                            <textarea id="message" name="message"
+                                class="w-full border-0 border-b border-white/10 py-3 px-0 focus:ring-0 focus:border-secondary-fixed-dim transition-all bg-transparent placeholder:text-white/20 text-on-surface font-body text-sm"
+                                placeholder="Describe your architectural vision..." rows="4"></textarea>
+                        </div>
+
+                        <button id="submit-btn"
+                            class="py-5 bg-gradient-to-r from-secondary-fixed-dim to-secondary-fixed text-primary-container font-bold text-xs uppercase tracking-[0.2em] w-full md:w-auto md:px-12 hover:shadow-[0_0_30px_rgba(233,195,73,0.3)] transition-all duration-300 flex items-center justify-center gap-3"
+                            type="submit">
+                            <span id="btn-text">Submit Formal Inquiry</span>
+                            <span id="btn-loader"
+                                class="hidden material-symbols-outlined text-[16px] animate-spin">sync</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Branch Locations Section with Satellite Views -->
+            <div class="mt-24 pt-16 border-t border-white/5 scroll-reveal">
+                <h4 class="font-headline text-2xl md:text-3xl text-on-surface mb-12 text-center tracking-wide">Our
+                    Branch Locations</h4>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                    <!-- Branch 1: Chengam -->
+                    <a href="https://maps.app.goo.gl/hKekQGwq8UUimgYw9?g_st=aw" target="_blank"
+                        rel="noopener noreferrer"
+                        class="group relative overflow-hidden rounded-2xl glass-panel border border-white/5 p-4 flex flex-col gap-4 shadow-xl hover:border-secondary-fixed-dim/30 transition-all duration-300">
+                        <div class="h-48 rounded-xl overflow-hidden relative">
+                            <div class="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-all duration-[1s]"
+                                style="background-image: url('./img/chengam\ branch.jpg');">
+                            </div>
+                            <span
+                                class="absolute bottom-4 left-4 px-3 py-1.5 bg-[#001b3d]/90 text-secondary-fixed text-[9px] font-semibold tracking-widest uppercase rounded-md border border-[#ffe088]/20 backdrop-blur-md z-10 flex items-center gap-2">
+                                <span
+                                    class="material-symbols-outlined text-[10px] text-red-500 fill-current animate-ping">location_on</span>
+                                Satellite Map View
+                            </span>
+                        </div>
+                        <div class="flex justify-between items-center px-1">
+                            <div>
+                                <h5
+                                    class="font-headline text-lg text-on-surface group-hover:text-secondary-fixed-dim transition-colors">
+                                    Chengam Branch</h5>
+                                <p class="font-body text-[10px] text-on-surface-variant uppercase tracking-wider mt-1">
+                                    Satellite Navigation Link</p>
+                            </div>
+                            <span
+                                class="material-symbols-outlined text-secondary-fixed-dim group-hover:translate-x-2 transition-transform">arrow_forward</span>
+                        </div>
+                    </a>
+                    <!-- Branch 2: Tiruvannamalai -->
+                    <a href="https://maps.app.goo.gl/A5zsx2Ff9zwfT3Wg6?g_st=aw" target="_blank"
+                        rel="noopener noreferrer"
+                        class="group relative overflow-hidden rounded-2xl glass-panel border border-white/5 p-4 flex flex-col gap-4 shadow-xl hover:border-secondary-fixed-dim/30 transition-all duration-300">
+                        <div class="h-48 rounded-xl overflow-hidden relative">
+                            <div class="absolute inset-0 bg-cover bg-center group-hover:scale-105 transition-all duration-[1s]"
+                                style="background-image: url('./img/tiruvannamalai\ branch.jpg');">
+                            </div>
+                            <span
+                                class="absolute bottom-4 left-4 px-3 py-1.5 bg-[#001b3d]/90 text-secondary-fixed text-[9px] font-semibold tracking-widest uppercase rounded-md border border-[#ffe088]/20 backdrop-blur-md z-10 flex items-center gap-2">
+                                <span
+                                    class="material-symbols-outlined text-[10px] text-red-500 fill-current animate-ping">location_on</span>
+                                Satellite Map View
+                            </span>
+                        </div>
+                        <div class="flex justify-between items-center px-1">
+                            <div>
+                                <h5
+                                    class="font-headline text-lg text-on-surface group-hover:text-secondary-fixed-dim transition-colors">
+                                    Tiruvannamalai Branch</h5>
+                                <p class="font-body text-[10px] text-on-surface-variant uppercase tracking-wider mt-1">
+                                    Satellite Navigation Link</p>
+                            </div>
+                            <span
+                                class="material-symbols-outlined text-secondary-fixed-dim group-hover:translate-x-2 transition-transform">arrow_forward</span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#020710] border-t border-white/10 py-20 relative overflow-hidden">
+        <div
+            class="max-w-[1440px] mx-auto px-6 md:px-16 flex flex-col md:flex-row justify-between items-start gap-12 relative z-10">
+            <div class="flex flex-col gap-6 text-left max-w-sm">
+                <div class="flex items-center gap-4">
+                    <img class="h-12 w-auto object-contain" src="img/logo.jpeg" alt="Anand Builders Logo" />
+                    <span class="font-headline text-xl text-on-surface font-bold">Anandh Builders</span>
+                </div>
+                <p class="font-body text-xs text-on-surface-variant leading-relaxed">
+                    Turning Dreams into reality for the discerning few. Building royal legacies since 1999.
+                </p>
+                <div class="flex gap-4 mt-2">
+                    <a href="https://wa.me/917845840773" target="_blank" rel="noopener noreferrer"
+                        class="text-on-surface-variant hover:text-[#25D366] transition-colors flex items-center gap-1 text-[10px] uppercase font-semibold"><span
+                            class="material-symbols-outlined text-lg">chat</span> WhatsApp</a>
+                    <a href="https://www.instagram.com/anandh_builders?utm_source=qr&igsh=MWk2NDNsZXEweWwyMQ=="
+                        target="_blank" rel="noopener noreferrer"
+                        class="text-on-surface-variant hover:text-[#E1306C] transition-colors flex items-center gap-1 text-[10px] uppercase font-semibold"><span
+                            class="material-symbols-outlined text-lg">photo_camera</span> Instagram</a>
+                    <a href="https://youtube.com/@anandhbuilderstvm?si=--2A0CXdZaVv0h4G" target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-on-surface-variant hover:text-[#FF0000] transition-colors flex items-center gap-1 text-[10px] uppercase font-semibold"><span
+                            class="material-symbols-outlined text-lg">video_library</span> YouTube</a>
+                </div>
+                <div class="flex flex-col gap-2 mt-4">
+                    <div class="text-[10px] font-body text-white/30 uppercase tracking-widest">
+                        © 2026 Anandh Builders. All Rights Reserved.
+                    </div>
+                    <div
+                        class="flex items-center gap-2 font-semibold text-[12px] font-body text-white uppercase tracking-widest">
+                        <span>Developed By</span>
+                        <a href="https://www.rahulravindran.co.in" target="_blank" rel="noopener noreferrer"
+                            class="hover:opacity-80 transition-opacity flex items-center">
+                            <img class="h-8 w-auto object-contain" src="img/RR_logo.png" alt="Rahul Ravindran Logo" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-16 text-left">
+                <div class="flex flex-col gap-4">
+                    <h6
+                        class="font-body text-[10px] text-secondary-fixed-dim uppercase tracking-widest mb-2 font-semibold">
+                        Navigation</h6>
+                    <a class="text-xs text-on-surface-variant hover:text-secondary-fixed transition-colors font-body"
+                        href="#heritage">Heritage</a>
+                    <a class="text-xs text-on-surface-variant hover:text-secondary-fixed transition-colors font-body"
+                        href="#portfolio">Constructions</a>
+                    <a class="text-xs text-on-surface-variant hover:text-secondary-fixed transition-colors font-body"
+                        href="#leadership">Leadership</a>
+                    <a class="text-xs text-on-surface-variant hover:text-secondary-fixed transition-colors font-body"
+                        href="gallery.html">Gallery</a>
+                    <a class="text-xs text-on-surface-variant hover:text-secondary-fixed transition-colors font-body"
+                        href="#contact">Inquire</a>
+                </div>
+                <div class="flex flex-col gap-4">
+                    <h6
+                        class="font-body text-[10px] text-secondary-fixed-dim uppercase tracking-widest mb-2 font-semibold">
+                        Legal & Code</h6>
+                    <a class="text-xs text-on-surface-variant hover:text-secondary-fixed transition-colors font-body"
+                        href="#">Privacy Policy</a>
+                    <a class="text-xs text-on-surface-variant hover:text-secondary-fixed transition-colors font-body"
+                        href="#">Terms of Service</a>
+                    <a class="text-xs text-on-surface-variant hover:text-secondary-fixed transition-colors font-body"
+                        href="#">Sustainability Charter</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive Scripts & Custom Animations -->
+    <script>
+        // DOM Elements
+        const mobileToggle = document.getElementById('mobile-nav-toggle');
+        const mobileMenu = document.getElementById('mobile-nav-menu');
+        const nav = document.querySelector('nav');
+        const revealElements = document.querySelectorAll('.scroll-reveal');
+
+        // Mobile Navigation Toggle
+        mobileToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Hide mobile menu on link click
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Navigation Shrink on Scroll
+        const logoImg = document.querySelector('.logo-img');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.classList.remove('h-24');
+                nav.classList.add('h-20', 'shadow-md');
+                logoImg.classList.remove('h-18');
+                logoImg.classList.add('h-14');
+            } else {
+                nav.classList.remove('h-20', 'shadow-md');
+                nav.classList.add('h-24');
+                logoImg.classList.remove('h-14');
+                logoImg.classList.add('h-18');
+            }
+        });
+
+        // Scroll Reveal Animations
+        const revealOnScroll = () => {
+            const triggerBottom = window.innerHeight * 0.95;
+            revealElements.forEach(el => {
+                const elTop = el.getBoundingClientRect().top;
+                if (elTop < triggerBottom) {
+                    el.classList.add('active');
+                }
+            });
+        };
+        window.addEventListener('scroll', revealOnScroll);
+        window.addEventListener('load', revealOnScroll);
+
+        // Stats Counters Animation
+        const statCounters = document.querySelectorAll('.stat-counter');
+        let countersAnimated = false;
+
+        const animateCounters = () => {
+            statCounters.forEach(counter => {
+                const target = parseInt(counter.getAttribute('data-target'));
+                const duration = 2000; // 2 seconds
+                const stepTime = Math.abs(Math.floor(duration / target));
+                let current = 0;
+
+                const timer = setInterval(() => {
+                    current += Math.ceil(target / 100);
+                    if (current >= target) {
+                        counter.textContent = target;
+                        clearInterval(timer);
+                    } else {
+                        counter.textContent = current;
+                    }
+                }, Math.max(stepTime, 20));
+            });
+        };
+
+        // Trigger stats counters animation when they come into view
+        const checkStatsVisibility = () => {
+            if (countersAnimated) return;
+            const statsSection = document.querySelector('.stat-counter');
+            if (!statsSection) return;
+            const rect = statsSection.getBoundingClientRect();
+            if (rect.top < window.innerHeight && rect.bottom >= 0) {
+                countersAnimated = true;
+                animateCounters();
+            }
+        };
+        window.addEventListener('scroll', checkStatsVisibility);
+        window.addEventListener('load', checkStatsVisibility);
+
+        // ==========================================
+        // SWIPEABLE / DRAGGABLE PORTFOLIO CAROUSEL
+        // ==========================================
+        const sliderTrack = document.getElementById('slider-track');
+        const prevBtn = document.getElementById('slider-prev');
+        const nextBtn = document.getElementById('slider-next');
+        const dotsContainer = document.getElementById('slider-dots');
+
+        let isDragging = false;
+        let startX;
+        let scrollLeft;
+        let currentCardIndex = 0;
+        let cardCenters = [];
+
+        // Grab child cards
+        const getCards = () => Array.from(sliderTrack.children);
+
+        // Generate Slide Dots
+        const setupDots = () => {
+            dotsContainer.innerHTML = '';
+            const cards = getCards();
+            cards.forEach((_, index) => {
+                const dot = document.createElement('button');
+                dot.className = `w-2 h-2 rounded-full transition-all duration-300 ${index === currentCardIndex ? 'bg-secondary-fixed-dim w-6' : 'bg-white/20'}`;
+                dot.ariaLabel = `Go to slide ${index + 1}`;
+                dot.addEventListener('click', () => {
+                    scrollToCard(index);
+                });
+                dotsContainer.appendChild(dot);
+            });
+        };
+
+        const updateDots = () => {
+            const dots = Array.from(dotsContainer.children);
+            dots.forEach((dot, index) => {
+                if (index === currentCardIndex) {
+                    dot.classList.add('bg-secondary-fixed-dim', 'w-6');
+                    dot.classList.remove('bg-white/20');
+                } else {
+                    dot.classList.remove('bg-secondary-fixed-dim', 'w-6');
+                    dot.classList.add('bg-white/20');
+                }
+            });
+        };
+
+        // Cache coordinates of card centers to prevent layout reflows on scroll
+        const updateCardCenters = () => {
+            const cards = getCards();
+            if (cards.length === 0) return;
+            const trackRect = sliderTrack.getBoundingClientRect();
+            cardCenters = cards.map(card => {
+                const cardLeft = card.getBoundingClientRect().left - trackRect.left + sliderTrack.scrollLeft;
+                return cardLeft + card.clientWidth / 2;
+            });
+        };
+
+        // Scale and highlight the active card, while fading the rest
+        const updateCardStates = () => {
+            const cards = getCards();
+            cards.forEach((card, index) => {
+                if (index === currentCardIndex) {
+                    card.classList.remove('opacity-40', 'scale-95');
+                    card.classList.add('opacity-100', 'scale-100');
+                } else {
+                    card.classList.remove('opacity-100', 'scale-100');
+                    card.classList.add('opacity-40', 'scale-95');
+                }
+            });
+        };
+
+        const scrollToCard = (index) => {
+            const cards = getCards();
+            if (index < 0 || index >= cards.length) return;
+            currentCardIndex = index;
+
+            const targetCard = cards[index];
+            const trackWidth = sliderTrack.clientWidth;
+            const cardWidth = targetCard.clientWidth;
+
+            let cardLeft;
+            if (cardCenters[index] !== undefined) {
+                cardLeft = cardCenters[index] - cardWidth / 2;
+            } else {
+                cardLeft = targetCard.getBoundingClientRect().left - sliderTrack.getBoundingClientRect().left + sliderTrack.scrollLeft;
+            }
+
+            // Center the card inside the track
+            const offset = cardLeft - (trackWidth - cardWidth) / 2;
+            sliderTrack.scrollTo({
+                left: offset,
+                behavior: 'smooth'
+            });
+            updateDots();
+            updateCardStates();
+        };
+
+        // Determine current card index based on scroll position using cached positions
+        sliderTrack.addEventListener('scroll', () => {
+            if (cardCenters.length === 0) return;
+
+            const trackCenter = sliderTrack.scrollLeft + sliderTrack.clientWidth / 2;
+            let closestIndex = 0;
+            let minDistance = Infinity;
+
+            cardCenters.forEach((center, index) => {
+                const distance = Math.abs(trackCenter - center);
+                if (distance < minDistance) {
+                    minDistance = distance;
+                    closestIndex = index;
+                }
+            });
+
+            if (currentCardIndex !== closestIndex) {
+                currentCardIndex = closestIndex;
+                updateDots();
+                updateCardStates();
+            }
+        });
+
+        // Mouse Drag Controls
+        sliderTrack.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            sliderTrack.classList.add('dragging');
+            startX = e.pageX - sliderTrack.offsetLeft;
+            scrollLeft = sliderTrack.scrollLeft;
+        });
+
+        sliderTrack.addEventListener('mouseleave', () => {
+            if (!isDragging) return;
+            isDragging = false;
+            sliderTrack.classList.remove('dragging');
+            snapToNearest();
+        });
+
+        sliderTrack.addEventListener('mouseup', () => {
+            if (!isDragging) return;
+            isDragging = false;
+            sliderTrack.classList.remove('dragging');
+            snapToNearest();
+        });
+
+        sliderTrack.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            e.preventDefault();
+            const x = e.pageX - sliderTrack.offsetLeft;
+            const walk = (x - startX) * 1.5; // Drag speed multiplier
+            sliderTrack.scrollLeft = scrollLeft - walk;
+        });
+
+        // Touch Swipe Controls (mobile) - leverage native scrolling and snapping
+        sliderTrack.addEventListener('touchstart', (e) => {
+            isDragging = true;
+            stopAutoTicker();
+        }, { passive: true });
+
+        sliderTrack.addEventListener('touchend', () => {
+            isDragging = false;
+            startAutoTicker();
+        }, { passive: true });
+
+        const snapToNearest = () => {
+            // Snap to the closest card (for mouse drag ending on desktop)
+            scrollToCard(currentCardIndex);
+        };
+
+        // Navigation Button Listeners
+        prevBtn.addEventListener('click', () => {
+            stopAutoTicker();
+            if (currentCardIndex > 0) {
+                scrollToCard(currentCardIndex - 1);
+            } else {
+                scrollToCard(getCards().length - 1); // wrap to end
+            }
+            startAutoTicker();
+        });
+
+        nextBtn.addEventListener('click', () => {
+            stopAutoTicker();
+            if (currentCardIndex < getCards().length - 1) {
+                scrollToCard(currentCardIndex + 1);
+            } else {
+                scrollToCard(0); // wrap to start
+            }
+            startAutoTicker();
+        });
+
+        // Auto Ticker logic
+        let autoTickerInterval;
+        const startAutoTicker = () => {
+            stopAutoTicker();
+            autoTickerInterval = setInterval(() => {
+                if (isDragging) return;
+                const cards = getCards();
+                if (cards.length === 0) return;
+                let nextIndex = (currentCardIndex + 1) % cards.length;
+                scrollToCard(nextIndex);
+            }, 4000);
+        };
+        const stopAutoTicker = () => {
+            if (autoTickerInterval) clearInterval(autoTickerInterval);
+        };
+
+        // Reset auto scroll on drag/swipe interactions
+        sliderTrack.addEventListener('mousedown', () => {
+            stopAutoTicker();
+        });
+        sliderTrack.addEventListener('mouseup', () => {
+            startAutoTicker();
+        });
+        sliderTrack.addEventListener('mouseleave', () => {
+            startAutoTicker();
+        });
+
+        // Initial setup for dots and scroll observer
+        window.addEventListener('load', () => {
+            setupDots();
+            updateCardCenters();
+            updateCardStates();
+
+            // Set up IntersectionObserver to start auto ticker when portfolio section is visible
+            const portfolioSection = document.getElementById('portfolio');
+            let hasIntersected = false;
+
+            const portfolioObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        if (!hasIntersected) {
+                            hasIntersected = true;
+                            currentCardIndex = 0;
+                            scrollToCard(0);
+                        }
+                        startAutoTicker();
+                    } else {
+                        stopAutoTicker();
+                    }
+                });
+            }, {
+                threshold: 0.15
+            });
+
+            portfolioObserver.observe(portfolioSection);
+
+            let isLoaded = false;
+            try {
+                if (window.name.indexOf('site-loaded') !== -1 || sessionStorage.getItem('site-loaded') === 'true') {
+                    isLoaded = true;
+                }
+            } catch (e) { }
+
+            if (isLoaded) {
+                initializePageContent();
+            }
+        });
+        window.addEventListener('resize', () => {
+            setupDots();
+            updateCardCenters();
+            updateCardStates();
+            scrollToCard(currentCardIndex);
+        });
+
+
+        // ==========================================
+        // HIGH PERFORMANCE SCROLL-DRIVEN VIDEO ENGINE
+        // ==========================================
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        const loaderScreen = document.getElementById('loader-screen');
+        const progressBar = document.getElementById('loader-progress');
+        const percentText = document.getElementById('loader-percentage');
+        const statusText = document.getElementById('loader-status');
+
+        const totalFrames = 30;
+        const frames = [];
+        let loadedFramesCount = 0;
+        let framesLoadingTimeout = null;
+
+        // Make canvas full size and handle retina displays
+        const resizeCanvas = () => {
+            const dpr = window.devicePixelRatio || 1;
+            canvas.width = window.innerWidth * dpr;
+            canvas.height = window.innerHeight * dpr;
+            ctx.scale(dpr, dpr);
+
+            // Draw current frame if available
+            if (loadedFramesCount >= totalFrames) {
+                const scrollTop = window.scrollY || document.documentElement.scrollTop;
+                const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+                const scrollFraction = maxScroll <= 0 ? 0 : scrollTop / maxScroll;
+                const index = Math.min(totalFrames - 1, Math.floor(scrollFraction * totalFrames));
+                renderFrameToCanvas(index);
+            }
+        };
+
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        // Canvas Rendering function
+        const renderFrameToCanvas = (index) => {
+            const img = frames[index];
+            if (!img || !img.complete) return;
+
+            const dpr = window.devicePixelRatio || 1;
+            const w = canvas.width / dpr;
+            const h = canvas.height / dpr;
+
+            const imgAspect = img.width / img.height;
+            const canvasAspect = w / h;
+
+            let drawWidth, drawHeight, drawX, drawY;
+
+            if (canvasAspect > imgAspect) {
+                drawWidth = w;
+                drawHeight = w / imgAspect;
+                drawX = 0;
+                drawY = (h - drawHeight) / 2;
+            } else {
+                drawWidth = h * imgAspect;
+                drawHeight = h;
+                drawX = (w - drawWidth) / 2;
+                drawY = 0;
+            }
+
+            ctx.clearRect(0, 0, w, h);
+            ctx.drawImage(img, drawX, drawY, drawWidth, drawHeight);
+        };
+
+        // Scroll listener mapping scroll progress to frame index and background visibility
+        const handleScrollAnimation = () => {
+            if (loadedFramesCount < totalFrames) return;
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            const heroHeight = window.innerHeight;
+
+            // Toggle opacity of canvas vs fallback slideshow based on scroll position
+            if (scrollTop < heroHeight) {
+                const progress = scrollTop / heroHeight;
+                canvas.style.opacity = progress;
+                document.getElementById('bg-fallback').style.opacity = (1 - progress) * 0.4;
+            } else {
+                canvas.style.opacity = 1;
+                document.getElementById('bg-fallback').style.opacity = 0;
+            }
+
+            const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollFraction = maxScroll <= 0 ? 0 : scrollTop / maxScroll;
+            const frameIndex = Math.min(totalFrames - 1, Math.floor(scrollFraction * totalFrames));
+            requestAnimationFrame(() => renderFrameToCanvas(frameIndex));
+        };
+        window.addEventListener('scroll', handleScrollAnimation);
+
+        // Pre-rendering loading routine
+        const loadFramesFromVideo = () => {
+            const video = document.createElement('video');
+            video.src = 'img/bg_video.mp4';
+            video.preload = 'auto';
+            video.muted = true;
+            video.playsInline = true;
+
+            // Timeout fallback: if frames don't load in 6 seconds, load fallback static setup
+            framesLoadingTimeout = setTimeout(() => {
+                console.warn("Video frames pre-render timed out. Loading fallback design.");
+                loadFallbackStaticBackground();
+            }, 6000);
+
+            video.addEventListener('error', (err) => {
+                console.error("Video loading encountered an error. Loading fallback design.", err);
+                loadFallbackStaticBackground();
+            });
+
+            video.addEventListener('loadedmetadata', () => {
+                const duration = video.duration;
+                if (!duration || isNaN(duration)) {
+                    loadFallbackStaticBackground();
+                    return;
+                }
+
+                statusText.textContent = "";
+                extractFrameAtIndex(0);
+
+                function extractFrameAtIndex(idx) {
+                    if (idx >= totalFrames) {
+                        clearTimeout(framesLoadingTimeout);
+                        onPreRenderComplete();
+                        return;
+                    }
+
+                    // Seek to the precise timestamp
+                    const targetTime = (idx / (totalFrames - 1)) * duration;
+                    video.currentTime = targetTime;
+
+                    const onSeeked = () => {
+                        video.removeEventListener('seeked', onSeeked);
+
+                        // Extract frame via offscreen canvas
+                        const offCanvas = document.createElement('canvas');
+                        offCanvas.width = video.videoWidth || 1280;
+                        offCanvas.height = video.videoHeight || 720;
+                        const offCtx = offCanvas.getContext('2d');
+                        offCtx.drawImage(video, 0, 0, offCanvas.width, offCanvas.height);
+
+                        const img = new Image();
+                        img.src = offCanvas.toDataURL('image/jpeg', 0.85);
+                        img.onload = () => {
+                            frames[idx] = img;
+                            loadedFramesCount++;
+
+                            // Update UI loaders
+                            const progressPercent = Math.round((loadedFramesCount / totalFrames) * 100);
+                            progressBar.style.width = `${progressPercent}%`;
+                            percentText.textContent = `${progressPercent}%`;
+
+                            extractFrameAtIndex(idx + 1);
+                        };
+                    };
+                    video.addEventListener('seeked', onSeeked);
+                }
+            });
+        };
+
+        let isInitialized = false;
+        function initializePageContent() {
+            if (isInitialized) return;
+            isInitialized = true;
+
+            // Trigger counter animations and layout reveals
+            revealOnScroll();
+            checkStatsVisibility();
+            startProjectSlideshows(); // Start nested auto-swipe
+            startHeroBgSlideshow();   // Start hero background carousel slideshow
+
+            // Initialize canvas and fallback opacity based on scroll
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            if (scrollTop === 0) {
+                canvas.style.opacity = 0;
+                document.getElementById('bg-fallback').style.opacity = 0.4;
+            } else {
+                handleScrollAnimation();
+            }
+
+            // Configure transitions
+            canvas.style.transition = 'opacity 0.2s ease-out';
+            document.getElementById('bg-fallback').style.transition = 'opacity 0.2s ease-out';
+        }
+
+        const onPreRenderComplete = () => {
+            try {
+                window.name = 'site-loaded';
+                sessionStorage.setItem('site-loaded', 'true');
+            } catch (e) { }
+            // Render first frame immediately
+            renderFrameToCanvas(0);
+
+            // Fade out loader
+            loaderScreen.style.opacity = '0';
+            setTimeout(() => {
+                loaderScreen.style.display = 'none';
+                initializePageContent();
+                handleScrollAnimation();
+            }, 800);
+        };
+
+        const loadFallbackStaticBackground = () => {
+            try {
+                window.name = 'site-loaded';
+                sessionStorage.setItem('site-loaded', 'true');
+            } catch (e) { }
+            clearTimeout(framesLoadingTimeout);
+            // Hide progress details, fade out loader
+            loaderScreen.style.opacity = '0';
+            setTimeout(() => {
+                loaderScreen.style.display = 'none';
+                initializePageContent();
+            }, 800);
+        };
+
+        // Auto-swiping slideshow logic for each project card
+        const startProjectSlideshows = () => {
+            const slideshows = document.querySelectorAll('.project-slideshow');
+            slideshows.forEach(slideshow => {
+                const images = slideshow.querySelectorAll('img');
+                if (images.length <= 1) return;
+
+                let currentIndex = 0;
+                setInterval(() => {
+                    // Fade out current
+                    images[currentIndex].classList.remove('opacity-100');
+                    images[currentIndex].classList.add('opacity-0');
+
+                    // Move to next index
+                    currentIndex = (currentIndex + 1) % images.length;
+
+                    // Fade in next
+                    images[currentIndex].classList.remove('opacity-0');
+                    images[currentIndex].classList.add('opacity-100');
+                }, 3000 + Math.random() * 1200); // randomize stagger interval
+            });
+        };
+
+        // Auto-swiping slideshow logic for Hero background
+        const startHeroBgSlideshow = () => {
+            const slides = document.querySelectorAll('.hero-bg-slide');
+            if (slides.length <= 1) return;
+
+            let currentIndex = 0;
+            setInterval(() => {
+                // Fade out current
+                slides[currentIndex].classList.remove('opacity-100');
+                slides[currentIndex].classList.add('opacity-0');
+
+                // Move to next
+                currentIndex = (currentIndex + 1) % slides.length;
+
+                // Fade in next
+                slides[currentIndex].classList.remove('opacity-0');
+                slides[currentIndex].classList.add('opacity-100');
+            }, 5000);
+        };
+
+        // Run the rendering engine on page boot
+        window.addEventListener('DOMContentLoaded', loadFramesFromVideo);
+
+        // ==========================================
+        // EMAILJS INTEGRATION
+        // ==========================================
+        (function () {
+            // Initialize EmailJS with your Public Key
+            // Replace 'YOUR_PUBLIC_KEY' with your actual EmailJS Public Key from Account Settings
+            emailjs.init({
+                publicKey: 'raacm3m8gtUlPIrLh',
+            });
+        })();
+
+        const inquiryForm = document.getElementById('inquiry-form');
+        const submitBtn = document.getElementById('submit-btn');
+        const btnText = document.getElementById('btn-text');
+        const btnLoader = document.getElementById('btn-loader');
+
+        // Toast Notification System
+        function showToast(message, isSuccess = true) {
+            // Remove existing toast if any
+            const existingToast = document.getElementById('emailjs-toast');
+            if (existingToast) {
+                existingToast.remove();
+            }
+
+            // Create toast element
+            const toast = document.createElement('div');
+            toast.id = 'emailjs-toast';
+            toast.className = `fixed bottom-6 right-6 z-50 flex items-center gap-4 px-6 py-4 rounded-2xl glass-panel shadow-2xl transition-all duration-500 transform translate-y-10 opacity-0 border ${isSuccess ? 'border-secondary-fixed-dim/40' : 'border-red-500/40'}`;
+
+            const iconColor = isSuccess ? 'text-secondary-fixed-dim' : 'text-red-500';
+            const iconName = isSuccess ? 'check_circle' : 'error';
+
+            toast.innerHTML = `
+                <span class="material-symbols-outlined ${iconColor} text-2xl">${iconName}</span>
+                <div class="flex flex-col text-left">
+                    <span class="font-headline text-sm font-semibold text-on-surface">${isSuccess ? 'Inquiry Sent' : 'Submission Failed'}</span>
+                    <span class="font-body text-xs text-on-surface-variant mt-0.5">${message}</span>
+                </div>
+                <button class="ml-4 text-white/40 hover:text-white transition-colors" onclick="this.parentElement.remove()">
+                    <span class="material-symbols-outlined text-[18px]">close</span>
+                </button>
+            `;
+
+            document.body.appendChild(toast);
+
+            // Trigger animation
+            setTimeout(() => {
+                toast.classList.remove('translate-y-10', 'opacity-0');
+            }, 100);
+
+            // Auto dismiss
+            setTimeout(() => {
+                toast.classList.add('translate-y-10', 'opacity-0');
+                setTimeout(() => {
+                    toast.remove();
+                }, 500);
+            }, 6000);
+        }
+
+        if (inquiryForm) {
+            inquiryForm.addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                // Show loading state
+                submitBtn.disabled = true;
+                btnText.textContent = 'Sending...';
+                btnLoader.classList.remove('hidden');
+
+                // Send the form using EmailJS
+                // Replace 'YOUR_SERVICE_ID' and 'YOUR_TEMPLATE_ID' with your EmailJS credentials
+                emailjs.sendForm('service_2zuqcqg', 'template_sjbi0u9', this)
+                    .then(() => {
+                        showToast('Your inquiry has been submitted successfully to Anandh Builders.', true);
+                        inquiryForm.reset();
+                    })
+                    .catch((error) => {
+                        console.error('EmailJS Error:', error);
+                        showToast('An error occurred. Please try again or contact us directly.', false);
+                    })
+                    .finally(() => {
+                        // Reset button state
+                        submitBtn.disabled = false;
+                        btnText.textContent = 'Submit Formal Inquiry';
+                        btnLoader.classList.add('hidden');
+                    });
+            });
+        }
+    </script>
+</body>
+
+</html>

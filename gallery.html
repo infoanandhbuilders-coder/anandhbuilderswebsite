@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Gallery | Anandh Builders - Turning Dreams into reality</title>
+    <!-- Tailwind CSS with Forms & Container Queries -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <!-- Premium Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400&family=Montserrat:wght@200;300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <!-- Google Material Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+        rel="stylesheet" />
+
+    <!-- Tailwind Custom Configuration -->
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary-container": "#001b3d", // Deep Royal Navy
+                        "secondary-fixed-dim": "#e9c349", // Gold
+                        "secondary-fixed": "#ffe088", // Soft Gold
+                        "on-primary-fixed-variant": "#31476b",
+                        "surface": "#020710", // Ultra dark backdrop for contrast
+                        "surface-card": "rgba(2, 7, 16, 0.6)",
+                        "on-surface": "#fbf9f8",
+                        "on-surface-variant": "#c4c6cf",
+                        "outline-variant": "rgba(233, 195, 73, 0.2)"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "3xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                    fontFamily: {
+                        "headline": ["Playfair Display", "serif"],
+                        "body": ["Montserrat", "sans-serif"]
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        .font-headline {
+            font-family: 'Playfair Display', serif;
+        }
+
+        .font-body {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .material-symbols-filled {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .glass-panel {
+            background: rgba(2, 7, 16, 0.25);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .glass-panel-gold {
+            background: rgba(0, 27, 61, 0.2);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(233, 195, 73, 0.10);
+        }
+
+        .gold-glow:hover {
+            box-shadow: 0 0 30px rgba(233, 195, 73, 0.25);
+            border-color: rgba(233, 195, 73, 0.4);
+        }
+
+        .nav-underline::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #e9c349;
+            transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        .nav-underline:hover::after {
+            width: 100%;
+        }
+
+        /* Custom scroll animations */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 1.2s cubic-bezier(0.215, 0.610, 0.355, 1.000), transform 1.2s cubic-bezier(0.215, 0.610, 0.355, 1.000);
+        }
+
+        .scroll-reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Sidebar social icons transition */
+        .social-fixed-btn {
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .social-fixed-btn:hover {
+            transform: translateX(-6px) scale(1.1);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #020710;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+            border: 2px solid #020710;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #e9c349;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-surface text-on-surface font-body overflow-x-hidden selection:bg-secondary-fixed-dim selection:text-primary-container">
+
+    <!-- Fixed Floating Side Social Menu -->
+    <div class="fixed right-6 top-1/2 -translate-y-1/2 z-40 flex flex-col gap-4">
+        <!-- WhatsApp -->
+        <a href="https://wa.me/917845840773" target="_blank" rel="noopener noreferrer"
+            class="social-fixed-btn w-12 h-12 rounded-full glass-panel flex items-center justify-center text-on-surface hover:text-[#25D366] border border-white/10 hover:border-[#25D366]/40 shadow-lg group relative"
+            aria-label="WhatsApp liaison">
+            <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                <path
+                    d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.246 8.477 3.514 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.724-1.457L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.42 9.863-9.864.001-2.637-1.023-5.115-2.883-6.978C16.59 1.899 14.116 1.83 12.008 1.83c-5.44 0-9.865 4.42-9.867 9.865-.001 1.767.461 3.493 1.338 5.024L2.5 21.5l5.147-1.346zM17.5 14.39c-.3-.15-1.782-.88-2.062-.98-.28-.1-.48-.15-.68.15-.2.3-.77.98-.95 1.18-.18.2-.35.23-.65.08-1.02-.51-1.98-1.09-2.76-1.77-.62-.54-1.03-1.21-1.15-1.42-.12-.21-.01-.32.09-.42.09-.09.2-.23.3-.35.1-.12.13-.2.2-.35.07-.15.03-.28-.02-.38-.05-.1-.48-1.15-.66-1.59-.17-.41-.35-.35-.48-.36h-.41c-.15 0-.38.06-.58.28-.2.22-.76.75-.76 1.83 0 1.08.79 2.13.9 2.28.11.15 1.56 2.38 3.79 3.34.53.23.95.37 1.27.47.54.17 1.03.15 1.41.09.43-.06 1.78-.73 2.03-1.43.25-.7.25-1.3.17-1.43-.07-.12-.27-.2-.57-.35z" />
+            </svg>
+            <span
+                class="absolute right-14 scale-0 origin-right transition-all duration-300 group-hover:scale-100 glass-panel text-secondary-fixed text-[10px] tracking-widest uppercase px-3 py-1 border border-white/10 rounded-md whitespace-nowrap">WhatsApp
+            </span>
+        </a>
+        <!-- Instagram -->
+        <a href="https://www.instagram.com/anandh_builders?utm_source=qr&igsh=MWk2NDNsZXEweWwyMQ==" target="_blank"
+            rel="noopener noreferrer"
+            class="social-fixed-btn w-12 h-12 rounded-full glass-panel flex items-center justify-center text-on-surface hover:text-[#E1306C] border border-white/10 hover:border-[#E1306C]/40 shadow-lg group relative"
+            aria-label="Instagram portal">
+            <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                <path
+                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204 0-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.791-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.209-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
+            </svg>
+            <span
+                class="absolute right-14 scale-0 origin-right transition-all duration-300 group-hover:scale-100 glass-panel text-secondary-fixed text-[10px] tracking-widest uppercase px-3 py-1 border border-white/10 rounded-md whitespace-nowrap">Instagram
+                Page</span>
+        </a>
+        <!-- YouTube -->
+        <a href="https://youtube.com/@anandhbuilderstvm?si=--2A0CXdZaVv0h4G" target="_blank" rel="noopener noreferrer"
+            class="social-fixed-btn w-12 h-12 rounded-full glass-panel flex items-center justify-center text-on-surface hover:text-[#FF0000] border border-white/10 hover:border-[#FF0000]/40 shadow-lg group relative"
+            aria-label="YouTube channel">
+            <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                <path
+                    d="M23.498 6.163c-.272-1.017-1.07-1.815-2.087-2.087C19.578 3.5 12 3.5 12 3.5s-7.578 0-9.412.576C1.57 4.348.772 5.146.502 6.163.003 7.997 0 12 0 12s.003 4.003.502 5.837c.27 1.017 1.07 1.815 2.087 2.087C4.42 20.5 12 20.5 12 20.5s7.578 0 9.412-.576c1.017-.272 1.815-1.07 2.087-2.087.5-1.834.502-5.837.502-5.837s-.002-4.003-.502-5.837zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+            </svg>
+            <span
+                class="absolute right-14 scale-0 origin-right transition-all duration-300 group-hover:scale-100 glass-panel text-secondary-fixed text-[10px] tracking-widest uppercase px-3 py-1 border border-white/10 rounded-md whitespace-nowrap">YouTube
+                Channel</span>
+        </a>
+    </div>
+
+    <!-- Navigation Header -->
+    <nav
+        class="fixed top-0 w-full z-[100] bg-white backdrop-blur-md border-b border-slate-100 transition-all duration-300 h-24 flex items-center shadow-[0_4px_25px_rgba(0,0,0,0.03)]">
+        <div class="flex justify-between items-center w-full px-6 md:px-16 max-w-[1440px] mx-auto">
+            <!-- Brand Logo & Name -->
+            <a href="index.html" class="flex items-center gap-4 group">
+                <img class="logo-img h-20 w-auto object-contain transition-all duration-300" src="img/logo.jpeg"
+                    alt="Anand Builders Logo" />
+                <div class="flex flex-col">
+                    <span
+                        class="font-headline text-lg md:text-xl text-slate-900 tracking-wider font-bold group-hover:text-amber-600 transition-colors">Anandh
+                        Builders</span>
+                    <span class="text-[9px] font-body tracking-[0.3em] text-orange-500 uppercase font-semibold">Turning
+                        Dreams into reality
+
+                    </span>
+                </div>
+            </a>
+
+            <!-- Nav Items -->
+            <div class="hidden md:flex items-center gap-12">
+                <a class="font-body text-xs text-slate-600 hover:text-slate-900 transition-colors duration-300 relative nav-underline uppercase tracking-widest"
+                    href="index.html#heritage">Heritage</a>
+                <a class="font-body text-xs text-slate-600 hover:text-slate-900 transition-colors duration-300 relative nav-underline uppercase tracking-widest"
+                    href="index.html#portfolio">Constructions</a>
+                <a class="font-body text-xs text-slate-600 hover:text-slate-900 transition-colors duration-300 relative nav-underline uppercase tracking-widest"
+                    href="index.html#leadership">Leadership</a>
+                <a class="font-body text-xs text-amber-600 hover:text-slate-900 transition-colors duration-300 relative uppercase tracking-widest font-semibold"
+                    href="gallery.html">Gallery</a>
+                <a href="index.html#contact"
+                    class="px-8 py-3.5 bg-primary-container text-secondary-fixed hover:bg-primary-container/90 rounded-none font-body text-xs uppercase tracking-widest transition-all duration-300 shadow-md">
+                    Inquire Now
+                </a>
+            </div>
+
+            <!-- Mobile Menu Toggle -->
+            <button class="md:hidden text-slate-900 flex items-center" id="mobile-nav-toggle"
+                aria-label="Toggle mobile menu">
+                <span class="material-symbols-outlined text-3xl">menu</span>
+            </button>
+        </div>
+
+        <!-- Mobile Dropdown Nav -->
+        <div id="mobile-nav-menu"
+            class="absolute top-24 left-0 w-full bg-white border-b border-slate-100 py-8 px-6 flex flex-col gap-6 hidden md:hidden shadow-lg">
+            <a class="font-body text-xs text-slate-700 hover:text-slate-950 uppercase tracking-widest"
+                href="index.html#heritage">Heritage</a>
+            <a class="font-body text-xs text-slate-700 hover:text-slate-950 uppercase tracking-widest"
+                href="index.html#portfolio">Constructions</a>
+            <a class="font-body text-xs text-slate-700 hover:text-slate-950 uppercase tracking-widest"
+                href="index.html#leadership">Leadership</a>
+            <a class="font-body text-xs text-slate-700 hover:text-slate-950 uppercase tracking-widest"
+                href="gallery.html">Gallery</a>
+            <a class="font-body text-xs text-slate-700 hover:text-slate-950 uppercase tracking-widest"
+                href="index.html#contact">Inquire</a>
+            <a href="index.html#contact"
+                class="w-full text-center py-4 bg-primary-container text-white font-semibold uppercase tracking-widest text-xs">
+                Inquire Now
+            </a>
+        </div>
+    </nav>
+
+    <!-- Page Header Section -->
+    <header class="relative min-h-[45vh] w-full flex flex-col justify-end pb-12 pt-36 overflow-hidden px-6 md:px-16">
+        <div class="absolute inset-0 bg-cover bg-center opacity-10 pointer-events-none"
+            style="background-image: url('img/BG.jpeg');"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-surface/40 to-surface pointer-events-none">
+        </div>
+
+        <div class="max-w-[1440px] mx-auto w-full flex flex-col items-center text-center z-20">
+            <div class="w-16 h-px bg-secondary-fixed-dim mb-6"></div>
+            <h1 class="font-headline text-4xl md:text-6xl text-on-surface mb-4 tracking-wide leading-tight">
+                Architectural <span class="text-orange-500 italic">Gallery</span>
+            </h1>
+            <p
+                class="font-body text-xs md:text-sm text-on-surface-variant max-w-xl leading-relaxed tracking-wider uppercase">
+                A Visual Showcase of Royal Grandeur, Sovereign Structural Engineering, and Dream Homes.
+            </p>
+        </div>
+    </header>
+
+    <!-- Gallery Filters & Grid Section -->
+    <section class="py-16 relative z-10 px-6 md:px-16 max-w-[1440px] mx-auto">
+        <!-- Filter Tabs -->
+        <div class="flex flex-wrap items-center justify-center gap-4 md:gap-6 mb-16">
+            <button
+                class="filter-btn px-6 py-2.5 rounded-full border border-white/10 hover:border-secondary-fixed-dim text-xs font-body uppercase tracking-widest transition-all duration-300 bg-secondary-fixed-dim text-primary-container font-semibold"
+                data-filter="handovers">Successfully Handedovers</button>
+            <button
+                class="filter-btn px-6 py-2.5 rounded-full border border-white/10 hover:border-secondary-fixed-dim text-xs font-body uppercase tracking-widest transition-all duration-300 text-on-surface hover:bg-white/5"
+                data-filter="completed">Completed Homes</button>
+            <button
+                class="filter-btn px-6 py-2.5 rounded-full border border-white/10 hover:border-secondary-fixed-dim text-xs font-body uppercase tracking-widest transition-all duration-300 text-on-surface hover:bg-white/5"
+                data-filter="construction">Under Construction</button>
+            <button
+                class="filter-btn px-6 py-2.5 rounded-full border border-white/10 hover:border-secondary-fixed-dim text-xs font-body uppercase tracking-widest transition-all duration-300 text-on-surface hover:bg-white/5"
+                data-filter="interiors">Interiors & Details</button>
+        </div>
+
+        <!-- Dynamic Grid of Cards -->
+        <div id="gallery-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Populated via JavaScript dynamically -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#020710] border-t border-white/10 py-20 relative overflow-hidden">
+        <div
+            class="max-w-[1440px] mx-auto px-6 md:px-16 flex flex-col md:flex-row justify-between items-start gap-12 relative z-10">
+            <div class="flex flex-col gap-6 text-left max-w-sm">
+                <div class="flex items-center gap-4">
+                    <img class="h-12 w-auto object-contain" src="img/logo.jpeg" alt="Anand Builders Logo" />
+                    <span class="font-headline text-xl text-on-surface font-bold">Anandh Builders</span>
+                </div>
+                <p class="font-body text-xs text-on-surface-variant leading-relaxed">
+                    Turning Dreams into reality for the discerning few. Building royal legacies since 1999.
+                </p>
+                <div class="flex gap-4 mt-2">
+                    <a href="https://wa.me/917845840773" target="_blank" rel="noopener noreferrer"
+                        class="text-on-surface-variant hover:text-[#25D366] transition-colors flex items-center gap-1 text-[10px] uppercase font-semibold"><span
+                            class="material-symbols-outlined text-lg">chat</span> WhatsApp</a>
+                    <a href="https://www.instagram.com/anandh_builders?utm_source=qr&igsh=MWk2NDNsZXEweWwyMQ=="
+                        target="_blank" rel="noopener noreferrer"
+                        class="text-on-surface-variant hover:text-[#E1306C] transition-colors flex items-center gap-1 text-[10px] uppercase font-semibold"><span
+                            class="material-symbols-outlined text-lg">photo_camera</span> Instagram</a>
+                    <a href="https://youtube.com/@anandhbuilderstvm?si=--2A0CXdZaVv0h4G" target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-on-surface-variant hover:text-[#FF0000] transition-colors flex items-center gap-1 text-[10px] uppercase font-semibold"><span
+                            class="material-symbols-outlined text-lg">video_library</span> YouTube</a>
+                </div>
+                <div class="flex flex-col gap-2 mt-4">
+                    <div class="text-[10px] font-body text-white/30 uppercase tracking-widest">
+                        © 2026 Anandh Builders. All Rights Reserved.
+                    </div>
+                    <div
+                        class="flex items-center gap-2 text-[12px] font-body font-semibold text-white uppercase tracking-widest">
+                        <span>Developed By</span>
+                        <a href="https://www.rahulravindran.co.in" target="_blank" rel="noopener noreferrer"
+                            class="hover:opacity-80 transition-opacity flex items-center">
+                            <img class="h-8 w-auto object-contain" src="img/RR_logo.png" alt="Rahul Ravindran Logo" />
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-16 text-left">
+                <div class="flex flex-col gap-4">
+                    <h6
+                        class="font-body text-[10px] text-secondary-fixed-dim uppercase tracking-widest mb-2 font-semibold">
+                        Navigation</h6>
+                    <a class="text-xs text-on-surface-variant hover:text-secondary-fixed transition-colors font-body"
+                        href="index.html#heritage">Heritage</a>
+                    <a class="text-xs text-on-surface-variant hover:text-secondary-fixed transition-colors font-body"
+                        href="index.html#portfolio">Constructions</a>
+                    <a class="text-xs text-on-surface-variant hover:text-secondary-fixed transition-colors font-body"
+                        href="index.html#leadership">Leadership</a>
+                    <a class="text-xs text-on-surface-variant hover:text-secondary-fixed transition-colors font-body"
+                        href="gallery.html">Gallery</a>
+                    <a class="text-xs text-on-surface-variant hover:text-secondary-fixed transition-colors font-body"
+                        href="index.html#contact">Inquire</a>
+                </div>
+                <div class="flex flex-col gap-4">
+                    <h6
+                        class="font-body text-[10px] text-secondary-fixed-dim uppercase tracking-widest mb-2 font-semibold">
+                        Legal & Code</h6>
+                    <a class="text-xs text-on-surface-variant hover:text-secondary-fixed transition-colors font-body"
+                        href="#">Privacy Policy</a>
+                    <a class="text-xs text-on-surface-variant hover:text-secondary-fixed transition-colors font-body"
+                        href="#">Terms of Service</a>
+                    <a class="text-xs text-on-surface-variant hover:text-secondary-fixed transition-colors font-body"
+                        href="#">Sustainability Charter</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Fullscreen Lightbox Modal -->
+    <div id="lightbox"
+        class="fixed inset-0 z-[200] bg-black/95 flex flex-col items-center justify-center hidden opacity-0 transition-opacity duration-300">
+        <!-- Close Button -->
+        <button id="lightbox-close"
+            class="absolute top-6 right-6 text-white hover:text-secondary-fixed-dim transition-colors z-30"
+            aria-label="Close Lightbox">
+            <span class="material-symbols-outlined text-4xl">close</span>
+        </button>
+
+        <!-- Navigation Buttons -->
+        <button id="lightbox-prev"
+            class="absolute left-6 text-white hover:text-secondary-fixed-dim transition-colors z-30 w-14 h-14 rounded-full flex items-center justify-center bg-white/5 hover:bg-white/10"
+            aria-label="Previous Image">
+            <span class="material-symbols-outlined text-3xl">chevron_left</span>
+        </button>
+        <button id="lightbox-next"
+            class="absolute right-6 text-white hover:text-secondary-fixed-dim transition-colors z-30 w-14 h-14 rounded-full flex items-center justify-center bg-white/5 hover:bg-white/10"
+            aria-label="Next Image">
+            <span class="material-symbols-outlined text-3xl">chevron_right</span>
+        </button>
+
+        <!-- Main Content Area -->
+        <div class="relative max-w-[90vw] max-h-[90vh] flex flex-col items-center justify-center">
+            <img id="lightbox-img"
+                class="max-w-full max-h-[85vh] object-contain rounded-lg border border-white/10 select-none shadow-2xl transition-all duration-300"
+                src="" alt="Lightbox View" />
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // DOM Elements
+        const mobileToggle = document.getElementById('mobile-nav-toggle');
+        const mobileMenu = document.getElementById('mobile-nav-menu');
+        const nav = document.querySelector('nav');
+
+        // Mobile Navigation Toggle
+        mobileToggle.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Navigation Shrink on Scroll
+        const logoImg = document.querySelector('.logo-img');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                nav.classList.remove('h-24');
+                nav.classList.add('h-20', 'shadow-md');
+                logoImg.classList.remove('h-18');
+                logoImg.classList.add('h-14');
+            } else {
+                nav.classList.remove('h-20', 'shadow-md');
+                nav.classList.add('h-24');
+                logoImg.classList.remove('h-14');
+                logoImg.classList.add('h-18');
+            }
+        });
+
+        // ==========================================
+        // DYNAMIC GALLERY DATA RENDERING
+        // ==========================================
+        const imagesData = [
+            { src: 'img/first customer.jpeg', category: 'handovers', title: 'Roshan Residency' },
+            { src: 'img/second customer.jpeg', category: 'handovers', title: 'Anand Manor' },
+            { src: 'img/third customer.jpeg', category: 'handovers', title: 'Sovereign Villa' },
+            { src: 'img/fourth customer.jpeg', category: 'handovers', title: 'Meridian Estate' },
+            { src: 'img/5th customet.jpeg', category: 'handovers', title: 'Vanguard House' },
+            { src: 'img/home 1.jpeg', category: 'completed', title: 'Royal Residence' },
+            { src: 'img/home 2.jpeg', category: 'completed', title: 'Sovereign Mansion' },
+            { src: 'img/home 4.jpeg', category: 'completed', title: 'Duplex Estate' },
+            { src: 'img/home 5.jpeg', category: 'completed', title: 'Palatial Villa' },
+            { src: 'img/WhatsApp Image 2026-06-16 at 6.52.25 PM.jpeg', category: 'completed', title: 'Bathroom Marble Layout' },
+
+            // Under Construction (Empty per user request)
+
+            // Interiors & Details
+            { src: 'img/WhatsApp Image 2026-06-16 at 6.47.46 PM (1).jpeg', category: 'interiors', title: 'Foyer Details' },
+            { src: 'img/WhatsApp Image 2026-06-16 at 6.47.45 PM (2).jpeg', category: 'interiors', title: 'Wall Plaster Finish' },
+            { src: 'img/WhatsApp Image 2026-06-16 at 6.47.45 PM.jpeg', category: 'interiors', title: 'Smooth Plaster Coat' },
+            { src: 'img/WhatsApp Image 2026-06-16 at 6.47.45 PM (1).jpeg', category: 'interiors', title: 'Wall Electrical Channels' },
+            { src: 'img/WhatsApp Image 2026-06-16 at 6.47.46 PM (2).jpeg', category: 'interiors', title: 'Wiring Conduit Placement' },
+            { src: 'img/WhatsApp Image 2026-06-16 at 6.47.46 PM.jpeg', category: 'interiors', title: 'Living Room Partition Plastering' },
+            { src: 'img/WhatsApp Image 2026-06-16 at 6.48.57 PM (1).jpeg', category: 'interiors', title: 'Plaster Ceiling Board' },
+            { src: 'img/WhatsApp Image 2026-06-16 at 6.48.57 PM.jpeg', category: 'interiors', title: 'Ceiling Design Layout' },
+            { src: 'img/WhatsApp Image 2026-06-16 at 6.48.58 PM (1).jpeg', category: 'interiors', title: 'Ceiling Lighting Slots' },
+            { src: 'img/WhatsApp Image 2026-06-16 at 6.48.58 PM.jpeg', category: 'interiors', title: 'Living Ceiling Illumination Board' },
+            { src: 'img/WhatsApp Image 2026-06-16 at 6.48.59 PM.jpeg', category: 'interiors', title: 'Polished Marble Floor' },
+            { src: 'img/WhatsApp Image 2026-06-16 at 6.49.01 PM (1).jpeg', category: 'interiors', title: 'High Gloss Marble Polish' },
+            { src: 'img/WhatsApp Image 2026-06-16 at 6.49.01 PM.jpeg', category: 'interiors', title: 'Living Room Flooring Patterns' },
+            { src: 'img/WhatsApp Image 2026-06-16 at 6.49.02 PM.jpeg', category: 'interiors', title: 'Modular TV Unit Cabinets' },
+            { src: 'img/WhatsApp Image 2026-06-16 at 6.49.59 PM (1).jpeg', category: 'interiors', title: 'Wardrobe Wood Frame' },
+            { src: 'img/WhatsApp Image 2026-06-16 at 6.50.00 PM (1).jpeg', category: 'interiors', title: 'Modular Wardrobe Laminate' },
+            { src: 'img/WhatsApp Image 2026-06-16 at 6.50.00 PM.jpeg', category: 'interiors', title: 'Foyer Wood Panels' },
+            { src: 'img/WhatsApp Image 2026-06-16 at 6.50.01 PM (1).jpeg', category: 'interiors', title: 'Modular Kitchen Drawers' },
+            { src: 'img/WhatsApp Image 2026-06-16 at 6.50.01 PM.jpeg', category: 'interiors', title: 'Kitchen Cabinetry Assembly' },
+            { src: 'img/WhatsApp Image 2026-06-16 at 6.50.02 PM.jpeg', category: 'interiors', title: 'Bespoke Wooden Trims' },
+            { src: 'img/WhatsApp Image 2026-06-16 at 6.50.04 PM.jpeg', category: 'interiors', title: 'Staircase Wooden Details' },
+            { src: 'img/WhatsApp Image 2026-06-16 at 6.50.08 PM.jpeg', category: 'interiors', title: 'Wardrobe Cabinets Finish' },
+            { src: 'img/WhatsApp Image 2026-06-16 at 6.50.09 PM.jpeg', category: 'interiors', title: 'Walk-in Wardrobe Sliding Doors' },
+            { src: 'img/WhatsApp Image 2026-06-16 at 6.50.10 PM.jpeg', category: 'interiors', title: 'Ceiling LED Lights Final' },
+            { src: 'img/WhatsApp Image 2026-06-16 at 9.13.42 PM.jpeg', category: 'interiors', title: 'Living Room Final Polish' }
+        ];
+
+        const galleryGrid = document.getElementById('gallery-grid');
+
+        const renderGallery = () => {
+            galleryGrid.innerHTML = '';
+            imagesData.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'gallery-item group relative overflow-hidden rounded-3xl glass-panel p-0 border border-white/5 transition-all duration-500 hover:border-secondary-fixed-dim/20 shadow-xl cursor-pointer';
+                card.setAttribute('data-category', item.category);
+                card.setAttribute('data-src', item.src);
+                card.setAttribute('data-title', item.title);
+                card.setAttribute('data-desc', item.category.charAt(0).toUpperCase() + item.category.slice(1));
+
+                // Set inner HTML (image only, no text below card)
+                card.innerHTML = `
+                    <div class="h-80 w-full overflow-hidden relative">
+                        <img class="w-full h-full object-cover group-hover:scale-105 transition-all duration-[1s]"
+                            src="${item.src}" alt="${item.title}" loading="lazy" />
+                    </div>
+                `;
+
+                card.addEventListener('click', () => openLightbox(card));
+                galleryGrid.appendChild(card);
+            });
+        };
+
+        // Render immediately on load
+        renderGallery();
+
+        // ==========================================
+        // GALLERY FILTER SYSTEM
+        // ==========================================
+        const filterBtns = document.querySelectorAll('.filter-btn');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Remove active classes
+                filterBtns.forEach(b => {
+                    b.classList.remove('bg-secondary-fixed-dim', 'text-primary-container', 'font-semibold');
+                    b.classList.add('text-on-surface', 'hover:bg-white/5');
+                });
+                // Add active to current
+                btn.classList.add('bg-secondary-fixed-dim', 'text-primary-container', 'font-semibold');
+                btn.classList.remove('text-on-surface', 'hover:bg-white/5');
+
+                const filter = btn.getAttribute('data-filter');
+                const items = document.querySelectorAll('.gallery-item');
+
+                items.forEach(item => {
+                    const category = item.getAttribute('data-category');
+                    if (filter === 'all' || category === filter) {
+                        item.classList.remove('hidden');
+                        item.style.opacity = '1'; // Instant show
+                    } else {
+                        item.classList.add('hidden');
+                    }
+                });
+            });
+        });
+
+        // Trigger active filter on load to display only the active tab's images
+        const activeFilterBtn = document.querySelector('.filter-btn.bg-secondary-fixed-dim');
+        if (activeFilterBtn) {
+            activeFilterBtn.click();
+        }
+
+        // ==========================================
+        // LIGHTBOX SYSTEM
+        // ==========================================
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxClose = document.getElementById('lightbox-close');
+        const lightboxPrev = document.getElementById('lightbox-prev');
+        const lightboxNext = document.getElementById('lightbox-next');
+
+        let currentActiveItems = [];
+        let currentItemIndex = 0;
+
+        const updateActiveItems = () => {
+            const items = document.querySelectorAll('.gallery-item');
+            currentActiveItems = Array.from(items).filter(item => !item.classList.contains('hidden'));
+        };
+
+        const openLightbox = (itemElement) => {
+            updateActiveItems();
+            currentItemIndex = currentActiveItems.indexOf(itemElement);
+
+            const src = itemElement.getAttribute('data-src');
+
+            lightboxImg.src = src;
+
+            lightbox.classList.remove('hidden');
+            setTimeout(() => {
+                lightbox.classList.remove('opacity-0');
+            }, 50);
+            document.body.style.overflow = 'hidden';
+        };
+
+        const closeLightbox = () => {
+            lightbox.classList.add('opacity-0');
+            setTimeout(() => {
+                lightbox.classList.add('hidden');
+            }, 300);
+            document.body.style.overflow = 'auto';
+        };
+
+        const navigateLightbox = (direction) => {
+            updateActiveItems();
+            if (currentActiveItems.length <= 1) return;
+
+            currentItemIndex = (currentItemIndex + direction + currentActiveItems.length) % currentActiveItems.length;
+            const nextItem = currentActiveItems[currentItemIndex];
+
+            lightboxImg.style.opacity = '0';
+            setTimeout(() => {
+                lightboxImg.src = nextItem.getAttribute('data-src');
+                lightboxImg.style.opacity = '1';
+            }, 200);
+        };
+
+        // Close Event
+        lightboxClose.addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeLightbox();
+        });
+
+        // Nav events
+        lightboxPrev.addEventListener('click', (e) => {
+            e.stopPropagation();
+            navigateLightbox(-1);
+        });
+        lightboxNext.addEventListener('click', (e) => {
+            e.stopPropagation();
+            navigateLightbox(1);
+        });
+
+        // Keyboard support
+        document.addEventListener('keydown', (e) => {
+            if (lightbox.classList.contains('hidden')) return;
+
+            if (e.key === 'Escape') closeLightbox();
+            if (e.key === 'ArrowLeft') navigateLightbox(-1);
+            if (e.key === 'ArrowRight') navigateLightbox(1);
+        });
+    </script>
+</body>
+
+</html>
