@@ -284,10 +284,7 @@
                     <span
                         class="font-headline text-lg md:text-xl text-slate-900 tracking-wider font-bold group-hover:text-amber-600 transition-colors">Anandh
                         Builders</span>
-                    <span class="text-[9px] font-body tracking-[0.3em] text-orange-500 uppercase font-semibold">Turning
-                        Dreams into reality
-
-                    </span>
+                    <span class="text-[8px] md:text-[9px] font-body tracking-[0.15em] md:tracking-[0.3em] text-orange-500 uppercase font-semibold whitespace-nowrap">Turning Dreams into reality</span>
                 </div>
             </a>
 
@@ -670,8 +667,9 @@
                                 <h5
                                     class="font-body text-xs font-semibold text-secondary-fixed-dim uppercase tracking-wider mb-2">
                                     Office Address</h5>
-                                <p class="font-body text-sm text-on-surface-variant leading-relaxed">101 Heritage
-                                    Boulevard, Suite 500<br />Capital City, 110001</p>
+                                <p class="font-body text-sm text-on-surface-variant leading-relaxed">Anandh builders
+                                    office, amirtham nagar, puludhiyur<br />Chengam, Tamil Nadu 606709
+                                    110001</p>
                             </div>
                         </li>
                         <li class="flex gap-6 items-start">
@@ -841,7 +839,7 @@
                     <span class="font-headline text-xl text-on-surface font-bold">Anandh Builders</span>
                 </div>
                 <p class="font-body text-xs text-on-surface-variant leading-relaxed">
-                    Turning Dreams into reality for the discerning few. Building royal legacies since 1999.
+                    Turning Dreams into reality for the discerning few. Building royal legacies since 2011.
                 </p>
                 <div class="flex gap-4 mt-2">
                     <a href="https://wa.me/917845840773" target="_blank" rel="noopener noreferrer"
@@ -1048,13 +1046,8 @@
         const updateCardStates = () => {
             const cards = getCards();
             cards.forEach((card, index) => {
-                if (index === currentCardIndex) {
-                    card.classList.remove('opacity-40', 'scale-95');
-                    card.classList.add('opacity-100', 'scale-100');
-                } else {
-                    card.classList.remove('opacity-100', 'scale-100');
-                    card.classList.add('opacity-40', 'scale-95');
-                }
+                card.classList.remove('opacity-40', 'scale-95');
+                card.classList.add('opacity-100', 'scale-100');
             });
         };
 
