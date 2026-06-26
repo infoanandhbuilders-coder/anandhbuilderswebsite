@@ -1307,12 +1307,25 @@
             ctx.scale(dpr, dpr);
 
             // Draw current frame if available
-            if (loadedFramesCount >= totalFrames) {
+            if (loadedFramesCount > 0) {
                 const scrollTop = window.scrollY || document.documentElement.scrollTop;
                 const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
                 const scrollFraction = maxScroll <= 0 ? 0 : scrollTop / maxScroll;
-                const index = Math.min(totalFrames - 1, Math.floor(scrollFraction * totalFrames));
-                renderFrameToCanvas(index);
+                const targetIndex = Math.min(totalFrames - 1, Math.floor(scrollFraction * totalFrames));
+                
+                // Find closest available frame
+                let bestIndex = 0;
+                let minDiff = totalFrames;
+                for (let i = 0; i < totalFrames; i++) {
+                    if (frames[i] && frames[i].complete) {
+                        const diff = Math.abs(i - targetIndex);
+                        if (diff < minDiff) {
+                            minDiff = diff;
+                            bestIndex = i;
+                        }
+                    }
+                }
+                renderFrameToCanvas(bestIndex);
             }
         };
 
@@ -1351,7 +1364,7 @@
 
         // Scroll listener mapping scroll progress to frame index and background visibility
         const handleScrollAnimation = () => {
-            if (loadedFramesCount < totalFrames) return;
+            if (loadedFramesCount === 0) return;
             const scrollTop = window.scrollY || document.documentElement.scrollTop;
             const heroHeight = window.innerHeight;
 
@@ -1367,8 +1380,21 @@
 
             const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
             const scrollFraction = maxScroll <= 0 ? 0 : scrollTop / maxScroll;
-            const frameIndex = Math.min(totalFrames - 1, Math.floor(scrollFraction * totalFrames));
-            requestAnimationFrame(() => renderFrameToCanvas(frameIndex));
+            const targetIndex = Math.min(totalFrames - 1, Math.floor(scrollFraction * totalFrames));
+
+            // Find closest available frame
+            let bestIndex = 0;
+            let minDiff = totalFrames;
+            for (let i = 0; i < totalFrames; i++) {
+                if (frames[i] && frames[i].complete) {
+                    const diff = Math.abs(i - targetIndex);
+                    if (diff < minDiff) {
+                        minDiff = diff;
+                        bestIndex = i;
+                    }
+                }
+            }
+            requestAnimationFrame(() => renderFrameToCanvas(bestIndex));
         };
         window.addEventListener('scroll', handleScrollAnimation);
 
@@ -1380,11 +1406,11 @@
             video.muted = true;
             video.playsInline = true;
 
-            // Timeout fallback: if frames don't load in 6 seconds, load fallback static setup
+            // Timeout fallback: if frames don't load in 2.5 seconds, load fallback static setup
             framesLoadingTimeout = setTimeout(() => {
                 console.warn("Video frames pre-render timed out. Loading fallback design.");
                 loadFallbackStaticBackground();
-            }, 6000);
+            }, 2500);
 
             video.addEventListener('error', (err) => {
                 console.error("Video loading encountered an error. Loading fallback design.", err);
@@ -1404,7 +1430,9 @@
                 function extractFrameAtIndex(idx) {
                     if (idx >= totalFrames) {
                         clearTimeout(framesLoadingTimeout);
-                        onPreRenderComplete();
+                        if (!preRenderCompleted) {
+                            onPreRenderComplete();
+                        }
                         return;
                     }
 
@@ -1428,12 +1456,21 @@
                             frames[idx] = img;
                             loadedFramesCount++;
 
-                            // Update UI loaders
+                            // Update UI loaders if elements exist
                             const progressPercent = Math.round((loadedFramesCount / totalFrames) * 100);
-                            progressBar.style.width = `${progressPercent}%`;
-                            percentText.textContent = `${progressPercent}%`;
+                            if (progressBar) progressBar.style.width = `${progressPercent}%`;
+                            if (percentText) percentText.textContent = `${progressPercent}%`;
 
-                            extractFrameAtIndex(idx + 1);
+                            // Instantly release the preloader screen as soon as the first frame (frame 0) is ready!
+                            if (idx === 0) {
+                                clearTimeout(framesLoadingTimeout);
+                                onPreRenderComplete();
+                            }
+
+                            // Introduce a brief delay before seeking next frame to keep main-thread scrolling responsive
+                            setTimeout(() => {
+                                extractFrameAtIndex(idx + 1);
+                            }, 60);
                         };
                     };
                     video.addEventListener('seeked', onSeeked);
@@ -1466,7 +1503,10 @@
             document.getElementById('bg-fallback').style.transition = 'opacity 0.2s ease-out';
         }
 
+        let preRenderCompleted = false;
         const onPreRenderComplete = () => {
+            if (preRenderCompleted) return;
+            preRenderCompleted = true;
             try {
                 window.name = 'site-loaded';
                 sessionStorage.setItem('site-loaded', 'true');
