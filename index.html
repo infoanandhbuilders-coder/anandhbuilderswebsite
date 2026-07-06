@@ -216,9 +216,11 @@
         </div>
     </div>
 
-    <!-- Scroll-driven Background Animation Canvas -->
-    <canvas id="bg-canvas"
-        class="fixed top-0 left-0 w-full h-full object-cover -z-10 pointer-events-none opacity-0"></canvas>
+    <!-- Fixed Background Video -->
+    <video id="bg-video" autoplay loop muted playsinline
+        class="fixed top-0 left-0 w-full h-full object-cover -z-10 pointer-events-none opacity-0">
+        <source src="img/bg_video.mp4" type="video/mp4">
+    </video>
 
     <!-- Static Fallback / Hero Background Image Carousel (behind canvas) -->
     <div id="bg-fallback" class="fixed top-0 left-0 w-full h-full -z-20 opacity-40 transition-opacity duration-300">
@@ -235,6 +237,17 @@
 
     <!-- Fixed Floating Side Social Menu -->
     <div class="fixed right-6 top-1/2 -translate-y-1/2 z-40 flex flex-col gap-4">
+        <!-- Call -->
+        <a href="tel:+917845840773"
+            class="social-fixed-btn w-12 h-12 rounded-full glass-panel flex items-center justify-center text-on-surface hover:text-[#e9c349] border border-white/10 hover:border-[#e9c349]/40 shadow-lg group relative"
+            aria-label="Call direct">
+            <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
+                <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.27c1.12.45 2.33.69 3.58.69a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.24 2.46.69 3.58a1 1 0 01-.27 1.1l-2.2 2.2z"/>
+            </svg>
+            <span
+                class="absolute right-14 scale-0 origin-right transition-all duration-300 group-hover:scale-100 glass-panel text-secondary-fixed text-[10px] tracking-widest uppercase px-3 py-1 border border-white/10 rounded-md whitespace-nowrap">Call Us
+            </span>
+        </a>
         <!-- WhatsApp -->
         <a href="https://wa.me/917845840773" target="_blank" rel="noopener noreferrer"
             class="social-fixed-btn w-12 h-12 rounded-full glass-panel flex items-center justify-center text-on-surface hover:text-[#25D366] border border-white/10 hover:border-[#25D366]/40 shadow-lg group relative"
@@ -885,6 +898,9 @@
                     Tiruvannamalai.
                 </p>
                 <div class="flex gap-4 mt-2">
+                    <a href="tel:+917845840773"
+                        class="text-on-surface-variant hover:text-[#e9c349] transition-colors flex items-center gap-1 text-[10px] uppercase font-semibold"><span
+                            class="material-symbols-outlined text-lg">call</span> Call</a>
                     <a href="https://wa.me/917845840773" target="_blank" rel="noopener noreferrer"
                         class="text-on-surface-variant hover:text-[#25D366] transition-colors flex items-center gap-1 text-[10px] uppercase font-semibold"><span
                             class="material-symbols-outlined text-lg">chat</span> WhatsApp</a>
@@ -1237,7 +1253,7 @@
             startAutoTicker();
         });
 
-        // Initial setup for dots and scroll observer
+        // Initial setup for dots, scroll observer, and instant preloader fade-out
         window.addEventListener('load', () => {
             setupDots();
             updateCardCenters();
@@ -1266,17 +1282,21 @@
 
             portfolioObserver.observe(portfolioSection);
 
-            let isLoaded = false;
-            try {
-                if (window.name.indexOf('site-loaded') !== -1 || sessionStorage.getItem('site-loaded') === 'true') {
-                    isLoaded = true;
-                }
-            } catch (e) { }
-
-            if (isLoaded) {
+            // Fast preloader fade-out on window load
+            const loaderScreen = document.getElementById('loader-screen');
+            const progressBar = document.getElementById('loader-progress');
+            if (progressBar) progressBar.style.width = '100%';
+            if (loaderScreen) {
+                loaderScreen.style.opacity = '0';
+                setTimeout(() => {
+                    loaderScreen.style.display = 'none';
+                    initializePageContent();
+                }, 600);
+            } else {
                 initializePageContent();
             }
         });
+
         window.addEventListener('resize', () => {
             setupDots();
             updateCardCenters();
@@ -1288,196 +1308,36 @@
         // ==========================================
         // HIGH PERFORMANCE SCROLL-DRIVEN VIDEO ENGINE
         // ==========================================
-        const canvas = document.getElementById('bg-canvas');
-        const ctx = canvas.getContext('2d');
-        const loaderScreen = document.getElementById('loader-screen');
-        const progressBar = document.getElementById('loader-progress');
-        const percentText = document.getElementById('loader-percentage');
-        const statusText = document.getElementById('loader-status');
+        const bgVideo = document.getElementById('bg-video');
+        const bgFallback = document.getElementById('bg-fallback');
 
-        const totalFrames = 30;
-        const frames = [];
-        let loadedFramesCount = 0;
-        let framesLoadingTimeout = null;
-
-        // Make canvas full size and handle retina displays
-        const resizeCanvas = () => {
-            const dpr = window.devicePixelRatio || 1;
-            canvas.width = window.innerWidth * dpr;
-            canvas.height = window.innerHeight * dpr;
-            ctx.scale(dpr, dpr);
-
-            // Draw current frame if available
-            if (loadedFramesCount > 0) {
-                const scrollTop = window.scrollY || document.documentElement.scrollTop;
-                const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-                const scrollFraction = maxScroll <= 0 ? 0 : scrollTop / maxScroll;
-                const targetIndex = Math.min(totalFrames - 1, Math.floor(scrollFraction * totalFrames));
-
-                // Find closest available frame
-                let bestIndex = 0;
-                let minDiff = totalFrames;
-                for (let i = 0; i < totalFrames; i++) {
-                    if (frames[i] && frames[i].complete) {
-                        const diff = Math.abs(i - targetIndex);
-                        if (diff < minDiff) {
-                            minDiff = diff;
-                            bestIndex = i;
-                        }
-                    }
-                }
-                renderFrameToCanvas(bestIndex);
-            }
-        };
-
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
-        // Canvas Rendering function
-        const renderFrameToCanvas = (index) => {
-            const img = frames[index];
-            if (!img || !img.complete) return;
-
-            const dpr = window.devicePixelRatio || 1;
-            const w = canvas.width / dpr;
-            const h = canvas.height / dpr;
-
-            const imgAspect = img.width / img.height;
-            const canvasAspect = w / h;
-
-            let drawWidth, drawHeight, drawX, drawY;
-
-            if (canvasAspect > imgAspect) {
-                drawWidth = w;
-                drawHeight = w / imgAspect;
-                drawX = 0;
-                drawY = (h - drawHeight) / 2;
-            } else {
-                drawWidth = h * imgAspect;
-                drawHeight = h;
-                drawX = (w - drawWidth) / 2;
-                drawY = 0;
-            }
-
-            ctx.clearRect(0, 0, w, h);
-            ctx.drawImage(img, drawX, drawY, drawWidth, drawHeight);
-        };
-
-        // Scroll listener mapping scroll progress to frame index and background visibility
+        // Scroll listener mapping scroll progress to background video opacity
         const handleScrollAnimation = () => {
-            if (loadedFramesCount === 0) return;
             const scrollTop = window.scrollY || document.documentElement.scrollTop;
             const heroHeight = window.innerHeight;
 
-            // Toggle opacity of canvas vs fallback slideshow based on scroll position
+            // Fade background video in and fallback slideshow out as we scroll down
             if (scrollTop < heroHeight) {
                 const progress = scrollTop / heroHeight;
-                canvas.style.opacity = progress;
-                document.getElementById('bg-fallback').style.opacity = (1 - progress) * 0.4;
+                if (bgVideo) bgVideo.style.opacity = progress;
+                if (bgFallback) bgFallback.style.opacity = (1 - progress) * 0.4;
             } else {
-                canvas.style.opacity = 1;
-                document.getElementById('bg-fallback').style.opacity = 0;
+                if (bgVideo) bgVideo.style.opacity = 1;
+                if (bgFallback) bgFallback.style.opacity = 0;
             }
+        };
 
-            const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-            const scrollFraction = maxScroll <= 0 ? 0 : scrollTop / maxScroll;
-            const targetIndex = Math.min(totalFrames - 1, Math.floor(scrollFraction * totalFrames));
-
-            // Find closest available frame
-            let bestIndex = 0;
-            let minDiff = totalFrames;
-            for (let i = 0; i < totalFrames; i++) {
-                if (frames[i] && frames[i].complete) {
-                    const diff = Math.abs(i - targetIndex);
-                    if (diff < minDiff) {
-                        minDiff = diff;
-                        bestIndex = i;
-                    }
-                }
+        // Smoothly throttle scroll updates using requestAnimationFrame
+        let scrollScheduled = false;
+        window.addEventListener('scroll', () => {
+            if (!scrollScheduled) {
+                scrollScheduled = true;
+                requestAnimationFrame(() => {
+                    handleScrollAnimation();
+                    scrollScheduled = false;
+                });
             }
-            requestAnimationFrame(() => renderFrameToCanvas(bestIndex));
-        };
-        window.addEventListener('scroll', handleScrollAnimation);
-
-        // Pre-rendering loading routine
-        const loadFramesFromVideo = () => {
-            const video = document.createElement('video');
-            video.src = 'img/bg_video.mp4';
-            video.preload = 'auto';
-            video.muted = true;
-            video.playsInline = true;
-
-            // Timeout fallback: if frames don't load in 2.5 seconds, load fallback static setup
-            framesLoadingTimeout = setTimeout(() => {
-                console.warn("Video frames pre-render timed out. Loading fallback design.");
-                loadFallbackStaticBackground();
-            }, 2500);
-
-            video.addEventListener('error', (err) => {
-                console.error("Video loading encountered an error. Loading fallback design.", err);
-                loadFallbackStaticBackground();
-            });
-
-            video.addEventListener('loadedmetadata', () => {
-                const duration = video.duration;
-                if (!duration || isNaN(duration)) {
-                    loadFallbackStaticBackground();
-                    return;
-                }
-
-                statusText.textContent = "";
-                extractFrameAtIndex(0);
-
-                function extractFrameAtIndex(idx) {
-                    if (idx >= totalFrames) {
-                        clearTimeout(framesLoadingTimeout);
-                        if (!preRenderCompleted) {
-                            onPreRenderComplete();
-                        }
-                        return;
-                    }
-
-                    // Seek to the precise timestamp
-                    const targetTime = (idx / (totalFrames - 1)) * duration;
-                    video.currentTime = targetTime;
-
-                    const onSeeked = () => {
-                        video.removeEventListener('seeked', onSeeked);
-
-                        // Extract frame via offscreen canvas
-                        const offCanvas = document.createElement('canvas');
-                        offCanvas.width = video.videoWidth || 1280;
-                        offCanvas.height = video.videoHeight || 720;
-                        const offCtx = offCanvas.getContext('2d');
-                        offCtx.drawImage(video, 0, 0, offCanvas.width, offCanvas.height);
-
-                        const img = new Image();
-                        img.src = offCanvas.toDataURL('image/jpeg', 0.85);
-                        img.onload = () => {
-                            frames[idx] = img;
-                            loadedFramesCount++;
-
-                            // Update UI loaders if elements exist
-                            const progressPercent = Math.round((loadedFramesCount / totalFrames) * 100);
-                            if (progressBar) progressBar.style.width = `${progressPercent}%`;
-                            if (percentText) percentText.textContent = `${progressPercent}%`;
-
-                            // Instantly release the preloader screen as soon as the first frame (frame 0) is ready!
-                            if (idx === 0) {
-                                clearTimeout(framesLoadingTimeout);
-                                onPreRenderComplete();
-                            }
-
-                            // Introduce a brief delay before seeking next frame to keep main-thread scrolling responsive
-                            setTimeout(() => {
-                                extractFrameAtIndex(idx + 1);
-                            }, 60);
-                        };
-                    };
-                    video.addEventListener('seeked', onSeeked);
-                }
-            });
-        };
+        });
 
         let isInitialized = false;
         function initializePageContent() {
@@ -1490,53 +1350,13 @@
             startProjectSlideshows(); // Start nested auto-swipe
             startHeroBgSlideshow();   // Start hero background carousel slideshow
 
-            // Initialize canvas and fallback opacity based on scroll
-            const scrollTop = window.scrollY || document.documentElement.scrollTop;
-            if (scrollTop === 0) {
-                canvas.style.opacity = 0;
-                document.getElementById('bg-fallback').style.opacity = 0.4;
-            } else {
-                handleScrollAnimation();
-            }
+            // Initialize video opacity based on scroll
+            handleScrollAnimation();
 
-            // Configure transitions
-            canvas.style.transition = 'opacity 0.2s ease-out';
-            document.getElementById('bg-fallback').style.transition = 'opacity 0.2s ease-out';
+            // Configure GPU-accelerated transition properties
+            if (bgVideo) bgVideo.style.transition = 'opacity 0.3s ease-out';
+            if (bgFallback) bgFallback.style.transition = 'opacity 0.3s ease-out';
         }
-
-        let preRenderCompleted = false;
-        const onPreRenderComplete = () => {
-            if (preRenderCompleted) return;
-            preRenderCompleted = true;
-            try {
-                window.name = 'site-loaded';
-                sessionStorage.setItem('site-loaded', 'true');
-            } catch (e) { }
-            // Render first frame immediately
-            renderFrameToCanvas(0);
-
-            // Fade out loader
-            loaderScreen.style.opacity = '0';
-            setTimeout(() => {
-                loaderScreen.style.display = 'none';
-                initializePageContent();
-                handleScrollAnimation();
-            }, 800);
-        };
-
-        const loadFallbackStaticBackground = () => {
-            try {
-                window.name = 'site-loaded';
-                sessionStorage.setItem('site-loaded', 'true');
-            } catch (e) { }
-            clearTimeout(framesLoadingTimeout);
-            // Hide progress details, fade out loader
-            loaderScreen.style.opacity = '0';
-            setTimeout(() => {
-                loaderScreen.style.display = 'none';
-                initializePageContent();
-            }, 800);
-        };
 
         // Auto-swiping slideshow logic for each project card
         const startProjectSlideshows = () => {
@@ -1580,9 +1400,6 @@
                 slides[currentIndex].classList.add('opacity-100');
             }, 5000);
         };
-
-        // Run the rendering engine on page boot
-        window.addEventListener('DOMContentLoaded', loadFramesFromVideo);
 
         // ==========================================
         // EMAILJS INTEGRATION
