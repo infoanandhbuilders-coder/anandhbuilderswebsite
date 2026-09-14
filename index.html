@@ -216,11 +216,9 @@
         </div>
     </div>
 
-    <!-- Fixed Background Video -->
-    <video id="bg-video" autoplay loop muted playsinline
-        class="fixed top-0 left-0 w-full h-full object-cover -z-10 pointer-events-none opacity-0">
-        <source src="img/bg_video.mp4" type="video/mp4">
-    </video>
+    <!-- Fixed Background Canvas (Fast, Instant Frame-by-Frame Scrubbing) -->
+    <canvas id="bg-canvas"
+        class="fixed top-0 left-0 w-full h-full object-cover -z-10 pointer-events-none opacity-75 transition-opacity duration-500"></canvas>
 
     <!-- Static Fallback / Hero Background Image Carousel (behind canvas) -->
     <div id="bg-fallback" class="fixed top-0 left-0 w-full h-full -z-20 opacity-40 transition-opacity duration-300">
@@ -242,10 +240,12 @@
             class="social-fixed-btn w-12 h-12 rounded-full glass-panel flex items-center justify-center text-on-surface hover:text-[#e9c349] border border-white/10 hover:border-[#e9c349]/40 shadow-lg group relative"
             aria-label="Call direct">
             <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24">
-                <path d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.27c1.12.45 2.33.69 3.58.69a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.24 2.46.69 3.58a1 1 0 01-.27 1.1l-2.2 2.2z"/>
+                <path
+                    d="M6.62 10.79a15.05 15.05 0 006.59 6.59l2.2-2.2a1 1 0 011.11-.27c1.12.45 2.33.69 3.58.69a1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.24 2.46.69 3.58a1 1 0 01-.27 1.1l-2.2 2.2z" />
             </svg>
             <span
-                class="absolute right-14 scale-0 origin-right transition-all duration-300 group-hover:scale-100 glass-panel text-secondary-fixed text-[10px] tracking-widest uppercase px-3 py-1 border border-white/10 rounded-md whitespace-nowrap">Call Us
+                class="absolute right-14 scale-0 origin-right transition-all duration-300 group-hover:scale-100 glass-panel text-secondary-fixed text-[10px] tracking-widest uppercase px-3 py-1 border border-white/10 rounded-md whitespace-nowrap">Call
+                Us
             </span>
         </a>
         <!-- WhatsApp -->
@@ -523,6 +523,19 @@
             </div> <!-- Draggable Container -->
             <div id="slider-track"
                 class="slider-track flex gap-8 overflow-x-auto select-none pb-12 cursor-grab active:cursor-grabbing -mx-6 md:-mx-16 px-[7.5vw] md:px-16 snap-x snap-mandatory md:snap-none">
+
+                <!-- Project Card: HD N1 -->
+                <div
+                    class="min-w-[85vw] md:min-w-[450px] lg:min-w-[500px] snap-center md:snap-align-none glass-panel rounded-3xl p-0 overflow-hidden group border border-white/5 transition-all duration-500 hover:border-secondary-fixed-dim/20 shadow-xl">
+                    <div class="h-[450px] w-full overflow-hidden relative project-slideshow">
+                        <img class="w-full h-full object-cover select-none absolute inset-0 opacity-100 transition-opacity duration-1000"
+                            src="./img/HD N1.jpeg" alt="Successfully Handed Over Estate" />
+                        <div
+                            class="absolute inset-0 bg-gradient-to-t from-surface/85 via-transparent to-transparent pointer-events-none z-10">
+                        </div>
+
+                    </div>
+                </div>
 
                 <!-- Project Card 1 (Azure Pavilion) -->
                 <div
@@ -959,6 +972,51 @@
         </div>
     </footer>
 
+    <!-- Announcement Popup Modal (SAPTARA) -->
+    <div id="saptara-modal"
+        class="fixed inset-0 z-[200] flex items-center justify-center p-3 sm:p-5 md:p-8 bg-black/85 backdrop-blur-md transition-all duration-500 opacity-0 pointer-events-none"
+        role="dialog" aria-modal="true" aria-label="Saptara Announcement">
+        <div id="saptara-card"
+            class="relative max-w-4xl w-full max-h-[92vh] flex flex-col items-center justify-center transform scale-95 transition-all duration-500 ease-out">
+
+            <!-- Close 'X' Button -->
+            <button id="saptara-close-btn" type="button" aria-label="Close Announcement"
+                class="absolute -top-3 -right-3 sm:-top-4 sm:-right-4 z-50 w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-surface border-2 border-secondary-fixed-dim text-secondary-fixed hover:bg-secondary-fixed-dim hover:text-primary-container flex items-center justify-center shadow-[0_4px_25px_rgba(0,0,0,0.9)] transition-all duration-300 hover:scale-110 active:scale-95 cursor-pointer">
+                <span class="material-symbols-outlined text-2xl font-bold">close</span>
+            </button>
+
+            <!-- Card Box -->
+            <div
+                class="relative w-full rounded-2xl sm:rounded-3xl overflow-hidden glass-panel border border-secondary-fixed-dim/30 shadow-[0_20px_70px_rgba(0,0,0,0.95)] bg-surface/95">
+                <!-- Top Gold Accent Line -->
+                <div class="h-1.5 w-full bg-gradient-to-r from-transparent via-secondary-fixed-dim to-transparent">
+                </div>
+
+                <!-- Image Frame with Mobile-friendly Max Height -->
+                <div
+                    class="w-full max-h-[76vh] flex items-center justify-center bg-black/50 p-2 sm:p-3 overflow-hidden">
+                    <img src="img/SAPTARA.png" alt="Saptara Anandh Builders"
+                        class="w-full h-auto max-h-[72vh] object-contain rounded-xl sm:rounded-2xl select-none" />
+                </div>
+
+                <!-- Footer Bar with Quick Dismiss / Action -->
+                <div
+                    class="py-3 px-4 sm:px-6 bg-primary-container/40 border-t border-white/10 flex items-center justify-between gap-3">
+                    <div
+                        class="flex items-center gap-2 text-secondary-fixed-dim text-xs font-semibold uppercase tracking-widest">
+                        <span class="material-symbols-outlined text-base text-secondary-fixed-dim">verified</span>
+                        <span class="hidden sm:inline">Anandh Builders</span>
+                        <span>Announcement</span>
+                    </div>
+                    <button id="saptara-explore-btn" type="button"
+                        class="px-5 py-2 rounded-full bg-gradient-to-r from-secondary-fixed-dim to-secondary-fixed text-primary-container font-semibold text-xs uppercase tracking-wider transition-all duration-300 hover:shadow-[0_0_20px_rgba(233,195,73,0.4)] cursor-pointer">
+                        Continue to Site
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Interactive Scripts & Custom Animations -->
     <script>
         // DOM Elements
@@ -1306,37 +1364,153 @@
 
 
         // ==========================================
-        // HIGH PERFORMANCE SCROLL-DRIVEN VIDEO ENGINE
+        // HIGH PERFORMANCE FRAME-BY-FRAME CANVAS ENGINE
         // ==========================================
-        const bgVideo = document.getElementById('bg-video');
+        const bgCanvas = document.getElementById('bg-canvas');
         const bgFallback = document.getElementById('bg-fallback');
+        const ctx = bgCanvas ? bgCanvas.getContext('2d') : null;
+        const totalFrames = 60;
+        const frames = [];
+        let currentRenderedIndex = -1;
+        let isInitialFrameRendered = false;
 
-        // Scroll listener mapping scroll progress to background video opacity
-        const handleScrollAnimation = () => {
-            const scrollTop = window.scrollY || document.documentElement.scrollTop;
-            const heroHeight = window.innerHeight;
+        // Preload all 60 frames for instant, zero-lag scrubbing
+        for (let i = 0; i < totalFrames; i++) {
+            const img = new Image();
+            const paddedIndex = String(i).padStart(3, '0');
+            img.src = `img/frames/frame_${paddedIndex}.jpg`;
+            img.onload = () => {
+                if (i === 0 && !isInitialFrameRendered) {
+                    isInitialFrameRendered = true;
+                    renderCanvasFrame(0);
+                }
+            };
+            frames.push(img);
+        }
 
-            // Fade background video in and fallback slideshow out as we scroll down
-            if (scrollTop < heroHeight) {
-                const progress = scrollTop / heroHeight;
-                if (bgVideo) bgVideo.style.opacity = progress;
-                if (bgFallback) bgFallback.style.opacity = (1 - progress) * 0.4;
+        function resizeCanvas() {
+            if (!bgCanvas || !ctx) return;
+            const dpr = window.devicePixelRatio || 1;
+            bgCanvas.width = window.innerWidth * dpr;
+            bgCanvas.height = window.innerHeight * dpr;
+            ctx.setTransform(1, 0, 0, 1, 0, 0); // reset transform
+            ctx.scale(dpr, dpr);
+            if (currentRenderedIndex >= 0) {
+                renderCanvasFrame(currentRenderedIndex);
+            } else if (frames[0] && frames[0].complete) {
+                renderCanvasFrame(0);
+            }
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        function renderCanvasFrame(index) {
+            if (!ctx || !bgCanvas) return;
+            const img = frames[index];
+            if (!img || !img.complete) return;
+            currentRenderedIndex = index;
+
+            const dpr = window.devicePixelRatio || 1;
+            const w = bgCanvas.width / dpr;
+            const h = bgCanvas.height / dpr;
+
+            const imgAspect = img.width / img.height;
+            const canvasAspect = w / h;
+
+            let drawW, drawH, drawX, drawY;
+            if (canvasAspect > imgAspect) {
+                drawW = w;
+                drawH = w / imgAspect;
+                drawX = 0;
+                drawY = (h - drawH) / 2;
             } else {
-                if (bgVideo) bgVideo.style.opacity = 1;
-                if (bgFallback) bgFallback.style.opacity = 0;
+                drawW = h * imgAspect;
+                drawH = h;
+                drawX = (w - drawW) / 2;
+                drawY = 0;
             }
-        };
 
-        // Smoothly throttle scroll updates using requestAnimationFrame
-        let scrollScheduled = false;
-        window.addEventListener('scroll', () => {
-            if (!scrollScheduled) {
-                scrollScheduled = true;
-                requestAnimationFrame(() => {
-                    handleScrollAnimation();
-                    scrollScheduled = false;
-                });
+            ctx.clearRect(0, 0, w, h);
+            ctx.drawImage(img, drawX, drawY, drawW, drawH);
+        }
+
+        // Fast responsive scroll speed:
+        // Completes the entire building construction sequence across ~1500px of scroll
+        // (fast, energetic, real-time responsive with every wheel tick or touch swipe)
+        const SPEED_SCROLL_DISTANCE = 1500;
+
+        function updateCanvasOnScroll() {
+            const scrollTop = window.scrollY || document.documentElement.scrollTop;
+            
+            // Map scroll to frame index with increased playback speed
+            const progress = Math.min(Math.max(scrollTop / SPEED_SCROLL_DISTANCE, 0), 1);
+            const targetFrameIndex = Math.min(totalFrames - 1, Math.floor(progress * totalFrames));
+
+            if (targetFrameIndex !== currentRenderedIndex) {
+                renderCanvasFrame(targetFrameIndex);
             }
+
+            // Keep background clearly visible and high-contrast
+            const heroHeight = window.innerHeight;
+            if (bgCanvas) {
+                if (scrollTop < heroHeight) {
+                    const heroProg = scrollTop / heroHeight;
+                    bgCanvas.style.opacity = 0.65 + heroProg * 0.25;
+                    if (bgFallback) bgFallback.style.opacity = (1 - heroProg) * 0.25;
+                } else {
+                    bgCanvas.style.opacity = 0.85;
+                    if (bgFallback) bgFallback.style.opacity = 0;
+                }
+            }
+        }
+
+        window.addEventListener('scroll', updateCanvasOnScroll, { passive: true });
+
+        // ==========================================
+        // SAPTARA ANNOUNCEMENT POPUP MODAL
+        // ==========================================
+        const saptaraModal = document.getElementById('saptara-modal');
+        const saptaraCard = document.getElementById('saptara-card');
+        const saptaraCloseBtn = document.getElementById('saptara-close-btn');
+        const saptaraExploreBtn = document.getElementById('saptara-explore-btn');
+
+        function openSaptaraModal() {
+            if (!saptaraModal) return;
+            saptaraModal.classList.remove('opacity-0', 'pointer-events-none');
+            saptaraModal.classList.add('opacity-100', 'pointer-events-auto');
+            if (saptaraCard) {
+                saptaraCard.classList.remove('scale-95');
+                saptaraCard.classList.add('scale-100');
+            }
+            document.body.classList.add('overflow-hidden');
+        }
+
+        function closeSaptaraModal() {
+            if (!saptaraModal) return;
+            saptaraModal.classList.remove('opacity-100', 'pointer-events-auto');
+            saptaraModal.classList.add('opacity-0', 'pointer-events-none');
+            if (saptaraCard) {
+                saptaraCard.classList.remove('scale-100');
+                saptaraCard.classList.add('scale-95');
+            }
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        if (saptaraCloseBtn) saptaraCloseBtn.addEventListener('click', closeSaptaraModal);
+        if (saptaraExploreBtn) saptaraExploreBtn.addEventListener('click', closeSaptaraModal);
+
+        // Click outside modal card to close
+        if (saptaraModal) {
+            saptaraModal.addEventListener('click', (e) => {
+                if (e.target === saptaraModal) {
+                    closeSaptaraModal();
+                }
+            });
+        }
+
+        // Close on Escape key
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeSaptaraModal();
         });
 
         let isInitialized = false;
@@ -1350,13 +1524,21 @@
             startProjectSlideshows(); // Start nested auto-swipe
             startHeroBgSlideshow();   // Start hero background carousel slideshow
 
-            // Initialize video opacity based on scroll
-            handleScrollAnimation();
+            // Initialize canvas frame and opacity based on scroll
+            updateCanvasOnScroll();
 
-            // Configure GPU-accelerated transition properties
-            if (bgVideo) bgVideo.style.transition = 'opacity 0.3s ease-out';
-            if (bgFallback) bgFallback.style.transition = 'opacity 0.3s ease-out';
+            // Open Saptara Popup smoothly when site opens
+            setTimeout(() => {
+                openSaptaraModal();
+            }, 300);
         }
+
+        // Fallback popup opener if load event was already fired
+        setTimeout(() => {
+            if (!isInitialized) {
+                initializePageContent();
+            }
+        }, 1200);
 
         // Auto-swiping slideshow logic for each project card
         const startProjectSlideshows = () => {
